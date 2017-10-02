@@ -1,26 +1,26 @@
-﻿SELECT * FROM Competition;
+SELECT * FROM Competition;
 
-SELECT * FROM Schools;
+SELECT * FROM Team;
 
-SELECT * FROM Users;
+SELECT * FROM User;
 
 SELECT * FROM TeamRecord;
 
-*** get all from a compettion ID***
-SELECT schoolInitials, currentScore 
+/* get all with a particular competition ID */
+SELECT teamInitials, currentScore
 FROM TeamRecord
 Where competitionID = 'COMP01';
 
-*** by score***
-SELECT schoolInitials, currentScore 
+/* order by score */
+SELECT teamInitials, currentScore
 FROM TeamRecord
 Where competitionID = 'COMP01'
 ORDER BY
-	currentScore DESC;
+currentScore DESC;
 
-***BY Name***
-SELECT schoolInitials, currentScore 
+/* order by name */
+SELECT teamInitials, currentScore
 FROM TeamRecord
 Where competitionID = 'COMP01'
 ORDER BY
-	schoolInitials DESC;
+teamInitials DESC;

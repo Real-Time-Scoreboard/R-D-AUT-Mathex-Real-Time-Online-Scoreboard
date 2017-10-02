@@ -1,26 +1,27 @@
-﻿Select * from Competition;
+Select * from Competition;
 
-***testing trigger from lower case to upercase***
-INSERT INTO Competition (competitionId, startTime, competitionDate)
-VALUES ('comp10',CURRENT_TIME,CURRENT_DATE)
+/* testing trigger from lower case to uppercase */
+INSERT INTO Competition (competitionId, startTime, active)
+VALUES ('comp10',CURRENT_TIME,true)
 ;
 
-INSERT INTO Competition (competitionId, startTime, competitionDate)
-VALUES ('COMP01',CURRENT_TIME,CURRENT_DATE),
-('COMP02',CURRENT_TIME,CURRENT_DATE),
-('COMP03',CURRENT_TIME,CURRENT_DATE),
-('COMP04',CURRENT_TIME,CURRENT_DATE)
+INSERT INTO Competition (competitionId, startTime, active)
+VALUES ('COMP01',CURRENT_TIME,false),
+('COMP02',CURRENT_TIME,false),
+('COMP03',CURRENT_TIME,false),
+('COMP04',CURRENT_TIME,false)
 ;
 
-INSERT INTO Schools 
+INSERT INTO Team
 VALUES ('AUT','Auckland University of Technology'),
-	('AU','Auckland University')	
+('UOA','Auckland University')
 ;
 
-INSERT INTO TeamRecord 
-VALUES ('COMP01','AUT')
-('COMP01','AU');
+INSERT INTO TeamRecord
+VALUES ('COMP01','AUT'),
+('COMP01','UOA')
+;
 
-INSERT INTO Users 
-VALUES ('Marker01','Unknown','password','Marker');
-	
+INSERT INTO PrivilegedUser
+VALUES ('Marker01','John Doe','password','Marker')
+;
