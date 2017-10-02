@@ -6,30 +6,32 @@ function updateCompetitionEntry($dbConn, $compID, $startTime)
     return $result = pg_query($dbConn, $query);
 }
 
-function updateSchoolName($dbConn, $initials, $sName)
+function updateTeamName($dbConn, $initials, $tName)
 {
-    $query = "Update Schools
+    $query = "Update Team
   SET
-  Schoolname = '$sName'
+  teamName = '$tName'
   Where
-  schoolInitials = '$initials'";
+  teamInitials = '$initials'";
     return $result = pg_query($dbConn, $query);
 }
 
-function updateTeamRecord($dbConn, $compId, $Initials, $assigned, $currquestion, $correctquest, $passes, $score)
+function updateTeamRecord($dbConn, $compId, $initials, $assigned, $currquestion, $correctquest, $passes, $score)
 {
     $result = pg_prepare($dbConn, "UpdateRecord_query", "UPDATE TeamRecord
     SET
     	assigned = $1,
-    	currentQuestionNumber = $2,
-    	totalCorrectQuestion = $3,
+    	currentQuestion = $2,
+    	totalCorrectQuestions = $3,
     	totalPasses = $4,
     	currentScore = $5
     Where
     competitionId = $6
     AND
-    schoolInitials = $7
+    teamInitials = $7
     ");
     return $result = pg_execute($dbConn, "UpdateRecord_query", array($assigned, $currquestion, $correctquest,
-    $passes, $score, $compId, $Initials));
+    $passes, $score, $compId, $initials));
 }
+
+?>

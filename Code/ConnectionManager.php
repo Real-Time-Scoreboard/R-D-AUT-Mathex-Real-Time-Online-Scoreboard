@@ -1,7 +1,4 @@
 <?php
-
-
-
 /***Pg_connect does not return a error message, it instead returns a ResourceBundle
 * See : https://stackoverflow.com/questions/4253136/how-to-catch-pg-connect-function-error
 * this method will set all pg methods to thow aerror  instead of returning false
@@ -38,3 +35,5 @@ function closeConn($dbConn)
 {
     return pg_close($dbConn);
 }
+
+?>
