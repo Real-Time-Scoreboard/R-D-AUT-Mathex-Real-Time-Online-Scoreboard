@@ -23,7 +23,7 @@ CREATE TABLE Team (
 CREATE TABLE TeamRecord (
   competitionID VARCHAR(6),
   teamInitials VARCHAR(10),
-  assigned BOOLEAN DEFAULT F,
+  assigned BOOLEAN DEFAULT 'F',
   currentQuestion SMALLINT DEFAULT 0,
   totalCorrectQuestions SMALLINT DEFAULT 0,
   totalPasses SMALLINT DEFAULT 0,
