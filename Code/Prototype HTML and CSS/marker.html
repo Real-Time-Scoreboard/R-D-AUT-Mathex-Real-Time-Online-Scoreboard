@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<style>
+	.btn-group button {
+		width: 30%;
+		border: 1px solid green; /* Green border */
+		color: white; /* White text */
+		padding: 10px 24px; /* Some padding */
+		cursor: pointer; /* Pointer/hand icon */
+		float: left; /* Float the buttons side by side */
+	}
+
+	/* Clear floats (clearfix hack) */
+	.btn-group:after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+
+	.btn-group button:not(:last-child) {
+		border-right: none; /* Prevent double borders */
+	}
+	
+	.correct-button {
+		background-color: GREEN;
+	}
+	
+	.undo-button {
+		background-color: RED;
+	}
+	
+	.pass-button {
+		background-color: BLUE;
+	}
+	
+	.correct-button:hover {
+		background-color: GREEN;
+	}
+	
+	.undo-button:hover {
+		background-color: RED;
+	}
+	
+	.pass-button:hover {
+		background-color: BLUE;
+	}
+	
+</style>
+<head>
+	<title>Team Selection</title>
+	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
+	<link rel="stylesheet" href="style/mainStyle.css">
+</head>
+<body>
+
+
+	
+	<h1> Select Team </h1>
+	<div class="content_container">
+	
+	<!-- Navigation bar -->
+	<ul class="navbar">
+			<!-- Navigation bar -->
+			<li class="navbar"><a href="home" class="current">Select Team</a></li>
+			<li class="navbar"><a href="">Team A</a></li>
+			<li class="navbar"><a href="">Team B</a></li>
+	</ul>
+	
+	<!-- Form to search teams -->
+	
+	<h2>Marking Team A
+	
+	<br>
+	<br>
+	
+	Current Question:
+	
+	<br>
+	
+	</h2>
+	
+	<div class="btn-group">
+		<button class="correct-button" onclick="confirm('Are you sure you wish to mark this question as Correct?')">Correct</button>
+		<button class="undo-button" onclick="confirm('Are you sure you return to the previous question?')">Undo</button>
+		<button class="pass-button" onclick="confirm('Are you sure you wish to pass this question?')">Pass</button>
+	</div>
+	
+</body>
+
+</html>
