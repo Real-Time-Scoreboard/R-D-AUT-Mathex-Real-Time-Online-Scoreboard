@@ -6,33 +6,50 @@
 	<link rel="stylesheet" href="style/mainStyle.css">
 </head>
 <body>
+	
 	<h1> Select Team </h1>
 	<div class="content_container">
-		<!-- Navigation bar -->
-		<ul class="navbar">
+	
+	<!-- Navigation bar -->
+	<ul class="navbar">
 			<!-- Navigation bar -->
 			<li class="navbar"><a href="teamSelect.html" class="current">Select Team</a></li>
 			<li class="navbar"><a href="marker.html">Team A</a></li>
-			<li class="navbar"><a href="marker.html">Team B</a></li>
-			<li class="navbar"><a href="welcome.html">Logout</a></li>
-		</ul>
-		<!-- Form to search teams -->
-		<form action="">
-			<h2>Search for the team you wish to track here:</h2>
-			<input type="text" name ="search" style="width:40%">
-			<button type="submit" id="search" onclick="alert('Button')">Search</button>
-			<br>
-			<h2>Or find your team in the drop-down list below</h2>
-			<select>
-				<option value="TeamA">Team A</option>
-				<option value="TeamB">Team B</option>
-				<option value="TeamC">Team C</option>
-			</select>
-			<button type="submit" id="select" onclick="alert('Button')">Select</button>
-		</form>
-		<br><br>
-		Team A:<br>
-		Team B:
+			<li class="navbar"><a href="">Team B</a></li>
+	</ul>
+	
+	<!-- Form to search teams or select from drop-down list -->
+	<form action="">
+		<h2>Search for the team you wish to track here:</h2>
+		<input type="text" name ="search" style="width:40%">
+		<button type="submit" id="search" onclick="alert('Button')">Search</button>
+	
+	
+		<br>
+		<h2>Or find your team in the drop-down list below</h2>
+		<select>
+			<option value="TeamA">Auckland Grammar School</option>
+			<option value="TeamB">Panmure District School</option>
+			<option value="TeamC">Puhinui School</option>
+		</select>
+		<button type="submit" id="select" onclick="alert('Button')">Assign</button>
+	</form>
+	
+	<br>
+	<br>
+	
+	Team A: Auckland Grammar School 
+	<br>
+	<button id="remove" onclick="confirm('Are you sure you wish to unassign this team?')">Unassign Team</button>
+	
+	<br>
+	
+	Team B: Panmure Distruct School
+	<br>
+	<button id="remove" onclick="confirm('Are you sure you wish to unassign this team?')">Unassign Team</button>
+	
 	</div>
+	
 </body>
+
 </html>
