@@ -9,14 +9,20 @@
 <body>
 	<!--Banner Welcome Message-->
 	<h1>Welcome to the Mathex Real Time Online Scoreboard</h1>
-
 	<div class="content_container">
+		<!-- Navigation bar -->
+		<ul class="navbar">
+			<li class="navbar"><a href="welcome.html" class="current">Home</a></li>
+			<li class="navbar"><a href="search.html">Search</a></li>
+			<li class="navbar"><a href="leaderboard.html">Leaderboard</a></li>
+			<li class="navbar"><a href="login.html">Login</a></li>
+		</ul>
 		<!--Buttons to query type of user-->
 		<button class="button" type="submit" id="spectator" onclick="location.href='leaderboard.html';" >
 			<span>Click here if you are a Spectator</span>
 		</button>
 		<br>
-		<button class="loginButton" type="submit" id="login" onclick="location.href='login.html ';">
+		<button class="loginButton" type="submit" id="login" onclick="location.href='login.html';">
 			<span>Click here if you wish to Login as a Marker or Admin</span>
 		</button>
 	</div>

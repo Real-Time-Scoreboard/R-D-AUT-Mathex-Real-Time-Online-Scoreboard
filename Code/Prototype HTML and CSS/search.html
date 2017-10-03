@@ -6,59 +6,54 @@
 	<link rel="stylesheet" href="style/mainStyle.css">
 </head>
 <body>
-	<!-- Navigation bar -->
-	<a href="home">Home</a>
-	<a href="search.html">Search</a>
-	<a href="leaderboard.html">Leaderboard</a>
-	<a href="myTeam">My Team</a>
-
-	<br>
-
-	<!-- Form to search teams -->
-	<form>
-		<h2>Search for the team you wish to track here:</h2>
-		<input type="text" name ="search" style="width:40%">
-		<button type="button" id="search" onclick="alert('Button')">Search</button>
-	</form>
-
-	<br>
-
-	<!-- Search results returned as a table with radio buttons -->
-	<table style="width:50%">
-		<tr>
-			<th>SELECT TEAM</th>
-			<th>TEAM NAME</th>
-		</tr>
-		<tr>
-			<td>
-				<div class="radio">
-                     <label><input type="radio" id='1' name="1"></label>
-                </div>
-			</td>
-			<td>TEAM A</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="radio">
-                     <label><input type="radio" id='2' name="1"></label>
-                </div>
-			</td>
-			<td>TEAM B</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="radio">
-                     <label><input type="radio" id='3' name="1"></label>
-                </div>
-			</td>
-			<td>TEAM C</td>
-		</tr>
-
-
-	</table>
-
-	<button type="button" id="track" onclick="alert('Button')">Track</button>
-
+	<h1>Select team</h1>
+	<div class="content_container">
+		<!-- Navigation bar -->
+		<ul class="navbar">
+			<li class="navbar"><a href="welcome.html">Home</a></li>
+			<li class="navbar"><a href="search.html"  class="current">Search</a></li>
+			<li class="navbar"><a href="leaderboard.html">Leaderboard</a></li>
+			<li class="navbar"><a href="login.html">Login</a></li>
+		</ul>
+		<!-- Form to search teams -->
+		<form>
+			<h2>Search for the team you wish to track here:</h2>
+			<input type="text" name ="search" style="width:40%">
+			<button type="button" id="search" onclick="alert('Button')">Search</button>
+		</form>
+		<br>
+		<!-- Search results returned as a table with radio buttons -->
+		<table style="width:50%">
+			<tr>
+				<th>SELECT TEAM</th>
+				<th>TEAM NAME</th>
+			</tr>
+			<tr>
+				<td>
+					<div class="radio">
+						<label><input type="radio" id='1' name="1"></label>
+					</div>
+				</td>
+				<td>TEAM A</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="radio">
+						<label><input type="radio" id='2' name="1"></label>
+					</div>
+				</td>
+				<td>TEAM B</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="radio">
+						<label><input type="radio" id='3' name="1"></label>
+					</div>
+				</td>
+				<td>TEAM C</td>
+			</tr>
+		</table>
+		<button type="button" id="track" onclick="alert('Button')">Track</button>
+	</div>
 </body>
-
 </html>
