@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaderboard</title>
+	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
+	<link rel="stylesheet" href="style/mainStyle.css">
+</head>
+<body>
+	<h1>Leaderboard</h1>
+	<div class="content_container">
+		<ul class="navbar">
+			<!-- Navigation bar -->
+			<li class="navbar"><a href="home">Home</a></li>
+			<li class="navbar"><a href="search">Search</a></li>
+			<li class="navbar"><a href="leaderboard.html" class="current">Leaderboard</a></li>
+			<li class="navbar"><a href="myTeam">My Team</a></li>
+		</ul>
+
+		<!-- Timer -->
+		<p id="timer" style="text-align:right"></p>
+
+		<div class="leaderboard-container">
+			<!-- Table for All Teams -->
+			<div class="other-components-container">
+				<h2>Competition</h2>
+				<table style="width:50%">
+					<tr>
+						<th>TEAM NAME</th>
+						<th>SCORE</th>
+					</tr>
+					<tr>
+						<td>TEAM A</td>
+						<td>100</td>
+					</tr>
+					<tr>
+						<td>TEAM B</td>
+						<td>99</td>
+					</tr>
+					<tr>
+						<td>TEAM C</td>
+						<td>23</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="other-components-container">
+				<!-- Top Team -->
+				<div class="other-components-container">
+					<h3>Top Team</h3>
+					TEAM A
+					<br>
+					35 POINTS
+					<table align="center" style="width:50%">
+						<tr>
+							<th>Correct</th>
+							<th>Pass</th>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>2</td>
+						</tr>
+					</table>
+				</div>
+
+				<!-- My selected Team -->
+				<div class="other-components-container">
+					<h3>My Team</h3>
+					TEAM C
+					<br>
+					10 POINTS
+					<table align="center" style="width:50%">
+						<tr>
+							<th>Correct</th>
+							<th>Pass</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+						</tr>
+					</table>
+				</div>
+
+				<div style="clear: left">
+					<!-- Buttons to change view for the leaderboard -->
+					<div class="other-components-container">
+						VIEW TYPE <br>
+						<button type="button" id="chart" onclick="alert('Button')">Chart</button>
+						<button type="button" id="table" onclick="alert('Button')">Table</button>
+					</div>
+					<div class="other-components-container">
+						ORDER BY <br>
+						<button type="button" id="numerical" onclick="alert('Button')">Numerical</button>
+						<button type="button" id="alphabetical" onclick="alert('Button')">Alphabetical</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- SCRIPT TO RUN THE TIMER -->
+	<script>
+	// THIS NEEDS TO BE CHANGED IN ORDER TO UPDATE THE TIMER
+	var countDownDate = new Date("Jan 5, 2018 15:37:25").getTime();
+
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+
+		// Get todays date and time
+		var now = new Date().getTime();
+
+		// Find the distance between now and the count down date
+		var distance = countDownDate - now;
+
+		// Time calculations for minutes and seconds
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		// Display the result in the element with id="demo"
+		document.getElementById("timer").innerHTML = "Time Remaining: " + minutes + "m " + seconds + "s ";
+
+		// If the count down is finished, write some text
+		if (distance < 0) {
+			clearInterval(x);
+			document.getElementById("timer").innerHTML = "Competition has ended.";
+		}
+	}, 1000);
+	</script>
+</body>
+
+</html>
