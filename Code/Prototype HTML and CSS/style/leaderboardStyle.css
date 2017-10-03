@@ -1,0 +1,13 @@
+.leaderboard-container {
+	margin: 0px;
+	padding: 20px;
+	border: solid black 2px;
+	overflow: hidden;
+}
+
+.other-components-container {
+	width: 50%;
+	float: left;
+	margin-bottom: 10px;
+	text-align: center;
+}
