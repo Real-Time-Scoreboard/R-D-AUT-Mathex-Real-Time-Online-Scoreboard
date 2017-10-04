@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Admin</title>
+	<title>Competitions Overview</title>
 	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
 	<link rel="stylesheet" href="style/mainStyle.css">
 </head>
 <body>
-	
-	<h1> Add a Competition </h1>
+
+	<h1>Competitions Overview</h1>
 	<div class="content_container">
-		
+
 		<!-- Navigation bar -->
 		<ul class="navbar">
 			<li class="navbar"><a href="addCompetition.html" class="current">Competition</a></li>
 			<li class="navbar"><a href="addTeam.html">Teams</a></li>
 			<li class="navbar"><a href="addUser.html">Users</a></li>
+			<li class="navbar"><a href="welcome.html">Logout</a></li>
 		</ul>
-			
+
 		<!-- Form to add a compeition -->
 		<form action="">
-			<h2>Competition Name: </h2>
-			<input type="text" name ="search" style="width:40%">
+			<h2>New competition:</h2>
+			<input type="text" name ="search" style="width:40%" placeholder="Unique competition name">
 			<button type="submit" id="add" onclick="confirm('Are you sure you wish to add this competition?')">Add</button>
 		</form>
-		
+
 		<br>
-		<h2>Current Competitions: </h2>
+		<h2>Existing Competitions:</h2>
 		<!-- List of Competitions -->
 		<table style="width:50%">
 			<tr>
@@ -37,17 +38,15 @@
 				<td>No</td>
 			</tr>
 			<tr>
-				<td><a href="">Competition B</a></td>
+				<td><a href="competitionAdmin.html">Competition B</a></td>
 				<td>No</td>
 			</tr>
 			<tr>
-				<td><a href="">Competition C</a></td>
+				<td><a href="competitionAdmin.html">Competition C</a></td>
 				<td>No</td>
 			</tr>
 		</table>
-		
 	</div>
-	
 </body>
 
 </html>

@@ -36,10 +36,8 @@ li.navbar a:hover:not(.current) {
 	background-color: #111;
 }
 
-h1 {
-	margin-top: 30px;
-	margin-bottom: 30px;
-	text-align: center;
+.current:hover {
+	background-color: #3e8e41;
 }
 
 .current {
@@ -53,4 +51,10 @@ h1 {
 	padding: 70px;
 	padding-bottom: 0px;
 	height: 100vh
+}
+
+h1 {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	text-align: center;
 }
