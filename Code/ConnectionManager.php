@@ -27,7 +27,7 @@ function openConnection()
 
 function openConnection()
 {
-    $conn_string = "host=localhost port=5432 dbname=postgres user=postgres password=password";
+    $conn_string = "host=localhost port=5432 dbname=Mathex user=postgres password=password";
     return $conn=pg_connect($conn_string, PGSQL_CONNECT_FORCE_NEW);// any error message is surpressed "@"
 }
 
@@ -35,5 +35,3 @@ function closeConn($dbConn)
 {
     return pg_close($dbConn);
 }
-
-?>
