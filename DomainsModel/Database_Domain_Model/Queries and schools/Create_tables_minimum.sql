@@ -23,13 +23,14 @@ CREATE TABLE Team (
 CREATE TABLE TeamRecord (
   competitionID VARCHAR(6),
   teamInitials VARCHAR(10),
-  assigned BOOLEAN DEFAULT 'F',
   currentQuestion SMALLINT DEFAULT 0,
   totalCorrectQuestions SMALLINT DEFAULT 0,
   totalPasses SMALLINT DEFAULT 0,
   currentScore SMALLINT DEFAULT 0,
+  assigned BOOLEAN DEFAULT 'F',
+  username VARCHAR(10) REFERENCES PrivilegedUser,
   PRIMARY KEY (competitionID,teamInitials),
-  CONSTRAINT TeamRecord_compID_fy FOREIGN KEY (competitionID)
+  CONSTRAINT TeamRecord_compID_fkey FOREIGN KEY (competitionID)
   REFERENCES Competition (competitionID) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT TeamRecord_schIni_fkey FOREIGN KEY (teamInitials)
