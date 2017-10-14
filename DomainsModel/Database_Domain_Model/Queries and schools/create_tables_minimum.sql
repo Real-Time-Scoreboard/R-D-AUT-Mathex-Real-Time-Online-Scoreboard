@@ -20,6 +20,13 @@ CREATE TABLE Team (
   teamName VARCHAR(100) UNIQUE
 );
 
+CREATE TABLE PrivilegedUser (
+  userName varchar(10) PRIMARY KEY,
+  fullName VARCHAR(25),
+  password VARCHAR(10),
+  privilege VARCHAR(10)
+);
+
 CREATE TABLE TeamRecord (
   competitionID VARCHAR(6),
   teamInitials VARCHAR(10),
@@ -36,11 +43,4 @@ CREATE TABLE TeamRecord (
   CONSTRAINT TeamRecord_schIni_fkey FOREIGN KEY (teamInitials)
   REFERENCES Team (teamInitials) MATCH SIMPLE
   ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE PrivilegedUser (
-  userName varchar(10) PRIMARY KEY,
-  fullName VARCHAR(25),
-  password VARCHAR(10),
-  privilege VARCHAR(10)
 );
