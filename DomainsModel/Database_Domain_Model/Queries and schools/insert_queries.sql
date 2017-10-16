@@ -23,5 +23,6 @@ VALUES ('COMP01','AUT'),
 ;
 
 INSERT INTO PrivilegedUser
-VALUES ('Marker01','John Doe','password','Marker')
+VALUES ('marker01','John Doe','password','Marker'),
+('admin01','Jane Doe','password','Admin');
 ;
