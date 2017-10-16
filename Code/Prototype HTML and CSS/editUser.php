@@ -1,3 +1,12 @@
+<?php
+	session_start();
+	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
+		header("Location: invalidLogin.html");
+	} else {
+		$msg = "Logged in as: " . $_SESSION['fullname'];
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,12 +20,14 @@
 
 		<!-- Navigation bar -->
 		<ul class="navbar">
-			<li class="navbar"><a href="addCompetition.html">Competition</a></li>
-			<li class="navbar"><a href="addTeam.html">Teams</a></li>
-			<li class="navbar"><a href="addUser.html" class="current">Users</a></li>
-			<li class="navbar"><a href="welcome.html">Logout</a></li>
+			<li class="navbar"><a href="addCompetition.php">Competition</a></li>
+			<li class="navbar"><a href="addTeam.php">Teams</a></li>
+			<li class="navbar"><a href="addUser.php" class="current">Users</a></li>
+			<li class="navbar"><a href="logout.php">Logout</a></li>
 		</ul>
 
+		<?php echo $msg; ?>
+		
 		<!-- Form to edit user -->
 		<form action="">
 			<h2>Edit User:</h2>

@@ -23,6 +23,14 @@ ul.navbar {
 	color: white;
 }
 
+li.navbar {
+	float: left;
+	display: block;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+}
+
 li.navbar a {
 	float: left;
 	display: block;
