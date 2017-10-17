@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="style/mainStyle.css">
 	<link rel="stylesheet" href="style/leaderboardStyle.css">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+	<script src="node_modules/chart.js/dist/Chart.min.js"></script>
 
 </head>
 <body>
@@ -146,7 +146,7 @@
 			});
 		})
 
-		// Set chart button to hide table and display chart
+		// On table click, chart button should hide table and display chart
 		document.getElementById('tableButton').addEventListener('click', function() {
 			var chart = document.getElementById('myChart').style.display = "none";
 
@@ -155,12 +155,14 @@
 
 	</script>
 
+	<script>
+		//Set the table to hidden and display the leaderboard chart by default.
+		document.getElementById("myChart").style.display = "inline";
+		document.getElementById("leaderboard-table").style.display = "none";
+	</script>
+
 	<!-- SCRIPT TO RUN THE TIMER -->
 	<script>
-		//set the chart to hidden and display the leaderboard table
-		document.getElementById("myChart").style.display = "none";
-		document.getElementById("leaderboard-table").style.display = "inline";
-
 		// THIS NEEDS TO BE CHANGED IN ORDER TO UPDATE THE TIMER
 		var countDownDate = new Date("Jan 5, 2018 15:37:25").getTime();
 		// Update the count down every 1 second
