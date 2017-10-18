@@ -24,4 +24,9 @@ function selectTopScores($dbConn, $activeCompetition){
   return pg_query($dbConn, $query);
 }
 
+function selectAllTeams($dbConn, $activeCompetition) {
+  $query = "SELECT teamname FROM team INNER JOIN TeamRecord ON team.teamInitials = TeamRecord.teamInitials WHERE competitionid = '$activeCompetition' ORDER BY teamname DESC";
+  return pg_query($dbConn, $query);
+}
+
 ?>
