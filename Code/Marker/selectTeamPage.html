@@ -1,0 +1,46 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="CssFiles/marker.css">
+  
+  <script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="JsFiles/xhr.js"></script>
+  <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="JsFiles/marker.js"></script>
+</head>
+
+<body>
+    <div class="mx-auto" id="teamSelectedShow">
+      <form class="form-horizontal ">
+        <div class="form-group form-inline ">
+          <label class=" " for="searchBar ">Team Initials :</label>
+          <div class="col-xs-2 form-inline ">
+            <input type="text " id="searchBar " placeholder="Track By Name... ">
+            <div class="col-2 ">
+              <input type="button" value="Select " id="searchButton ">
+            </div>
+          </div>
+        </div>
+        <div class="form-group form-inline ">
+          <label class="" for="selectTeam">Select Team :</label>
+          <div class="col-xs-4 form-inline ">
+            <select id="selectTeam" type="text " name="selectTeam"> <!--drop down list -->
+                <option value="" disabled selected >Please choose...</option>
+              </select>
+            <div class="col-4 ">
+              <input type="button" value="Select ">
+            </div>
+          </div>
+        </div>
+      </form>
+      <div>
+        <p id="teamA "> Team A: </p>
+        <p id="teamB "> Team B: </p>
+      </div>
+    </div>
+  </body>
+</html>

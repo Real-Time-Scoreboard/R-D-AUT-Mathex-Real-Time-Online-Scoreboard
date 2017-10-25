@@ -1,0 +1,54 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="CssFiles/marker.css">
+
+  <script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="JsFiles/xhr.js"></script>
+  <script type="text/javascript" src="JsFiles/marker.js"></script>
+  <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+
+</head>
+
+<body onload="loadPage('homePage.html')">
+  <div class="container">
+    <div class="row  no-gutters">
+      <div class="col-4  thumbnail ">
+        <img class="img-thumbnail img-responsive" src="../images/aut-logo.gif" class="img-rounded" alt="AUT">
+      </div>
+      <div class="col-4 thumbnail">
+        <img class="img-thumbnail img-responsive" src="../images/AMA.jpg" class="img-rounded" alt="AMA">
+      </div>
+      <div class="col-4 thumbnail ">
+        <img class=" img-thumbnail img-responsive" src="../images/Logo-MATHEX.png" class="img-rounded" alt="MATHEX">
+      </div>
+    </div>
+  </div>
+
+  <div class="container pageBorder">
+
+    <ul class="nav nav-fill" id="my_menu">
+      <li class="nav-item">
+        <a class="nav-link" onclick="loadPage('homePage.html')">Home</a>
+      </li>
+      <li class=" nav-item ">
+        <a class="nav-link " onclick="loadPage('selectTeamPage.html ')">Select Team</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link " onclick="">Team A</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" onclick="">Team B</a>
+      </li>
+    </ul>
+    <div class="mx-auto center_div" id="displayBody" ></div>
+
+  </div>
+</body>
+
+</html>
