@@ -5,6 +5,9 @@
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullname'];
 	}
+	include '../ConnectionManager.php';
+	include '../InsertData.php';
+	include '../SelectData.php';
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +16,7 @@
 	<title>Competitions Overview</title>
 	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
 	<link rel="stylesheet" href="style/mainStyle.css">
+
 </head>
 <body>
 
@@ -28,13 +32,32 @@
 		</ul>
 
 		<?php echo $msg; ?>
-		
+
 		<!-- Form to add a compeition -->
-		<form action="">
+		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<h2>New competition:</h2>
-			<input type="text" name ="search" style="width:40%" placeholder="Unique competition name">
-			<button type="submit" id="add" onclick="confirm('Are you sure you wish to add this competition?')">Add</button>
+			<input type="text" name ="competitionid" style="width:40%" placeholder="Unique competition name" maxlength="6" required>
+			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this competition?')">Add</button>
 		</form>
+
+		<?php
+			if (isset($_POST['competitionid'])) {
+				$dbConn = openConnection();
+			  if (!$dbConn) {
+		      echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+			  } else {
+
+					$row = selectCompetitionID($dbConn, strtoupper($_POST['competitionid']));
+
+					if (!$row[0]) {
+						insertNewCompetition($dbConn, $_POST['competitionid']);
+						echo $msg = $_POST['competitionid'] . " has been successfully created!";
+					} else {
+						echo "That competition already exists!";
+					}
+				}
+			}
+		?>
 
 		<br>
 		<h2>Existing Competitions:</h2>
@@ -57,6 +80,7 @@
 				<td>No</td>
 			</tr>
 		</table>
+
 	</div>
 </body>
 

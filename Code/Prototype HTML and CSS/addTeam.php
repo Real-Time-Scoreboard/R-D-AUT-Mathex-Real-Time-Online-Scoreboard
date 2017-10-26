@@ -5,6 +5,9 @@
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullname'];
 	}
+	include '../ConnectionManager.php';
+	include '../InsertData.php';
+	include '../SelectData.php';
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +33,7 @@
 		<?php echo $msg; ?>
 
 		<!-- Form to add a team -->
-		<form action="">
+		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<h2>Add a Team:</h2>
 			Team Initials:
 			<br>
@@ -40,8 +43,27 @@
 			<br>
 			<input type="text" name ="teamName" style="width:40%" required>
 			<br>
-			<button type="submit" id="add" onclick="confirm('Are you sure you wish to add this team?')">Add</button>
+			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this team?')">Add</button>
 		</form>
+
+		<?php
+			if (isset($_POST['teamInitials']) && isset($_POST['teamName'])) {
+				$dbConn = openConnection();
+			  if (!$dbConn) {
+		      echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+			  } else {
+
+					$row = selectTeam($dbConn, strtoupper($_POST['teamInitials']), strtoupper($_POST['teamName']));
+
+					if (!$row[0]) {
+						insertNewTeam($dbConn, $_POST['teamInitials'], $_POST['teamName']);
+						echo $msg = $_POST['teamName'] . " has been successfully created!";
+					} else {
+						echo "That team already exists!";
+					}
+				}
+			}
+		?>
 
 		<br>
 		<h2>Existing Teams:</h2>

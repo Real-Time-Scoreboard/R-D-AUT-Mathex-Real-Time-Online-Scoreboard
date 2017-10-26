@@ -5,6 +5,9 @@
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullname'];
 	}
+	include '../ConnectionManager.php';
+	include '../InsertData.php';
+	include '../SelectData.php';
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +31,9 @@
 		</ul>
 
 		<?php echo $msg; ?>
-		
+
 		<!-- Form to add a user -->
-		<form action="">
+		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<h2>Add a User:</h2>
 			User ID:<br>
 			<input type="text" name="username" style="width:40%" required>
@@ -39,12 +42,31 @@
 			<br>Password:<br>
 			<input type="text" name="password" style="width:40%" required>
 			<br>Privilege:
-			<select>
+			<select name="privilege">
 				<option value="TeamA">Marker</option>
 				<option value="TeamB">Admin</option>
 			</select>
-			<button type="submit" id="add" onclick="confirm('Are you sure you wish to add this user?')">Add</button>
+			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this user?')">Add</button>
 		</form>
+
+		<?php
+			if (isset($_POST['username']) && isset($_POST['fullname']) && isset($_POST['password']) && isset($_POST['privilege'])) {
+				$dbConn = openConnection();
+			  if (!$dbConn) {
+		      echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+			  } else {
+
+					$row = selectUser($dbConn, $_POST['username'], $_POST['fullname'], $_POST['password'], $_POST['privilege']);
+
+					if (!$row[0]) {
+						insertUser($dbConn, $_POST['username'], $_POST['fullname'], $_POST['password'], $_POST['privilege']);
+						echo $msg = "User " . $_POST['username'] . " has been successfully created!";
+					} else {
+						echo "That User already exists!";
+					}
+				}
+			}
+		?>
 
 		<br>
 		<h2>Existing Users:</h2>
