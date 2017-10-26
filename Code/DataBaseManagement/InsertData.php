@@ -13,6 +13,16 @@ function insertNewUser($dbConn, $userName, $name, $psw, $priv)
   pg_escape_string($psw),pg_escape_string($priv)));
 }
 
+function insertNewCompetition($dbConn, $competitionid) {
+  $query =  "INSERT INTO Competition (competitionid) VALUES ('$competitionid')";
+  return $result = pg_query($dbConn, $query);
+}
+
+function insertNewTeam($dbConn, $teamInitials, $teamName) {
+  $query =  "INSERT INTO team VALUES ('$teamInitials', '$teamName')";
+  return $result = pg_query($dbConn, $query);
+}
+
 function insertIntoCompetition($dbConn, $compID, $startTime)
 {
   //$query = "INSERT INTO Competition (competitionId, startTime, competitionDate)
