@@ -63,7 +63,7 @@ include 'UpdateData.php'
       echo "<br/>Insert new user failed: <br/>".$error."<br/>".pg_result_error($error);
   }
 
-  if (updateCompetitionEntry($dbConn, "COMP01", date('H:i:s'))) {
+  if (updateCompetitionEntry($dbConn, "COMP01", date('H:i:s'), 1)) {
       echo "<br/>updateCompetitionEntry successfully <br/>";
   } else {
       $error = pg_last_error($dbConn);

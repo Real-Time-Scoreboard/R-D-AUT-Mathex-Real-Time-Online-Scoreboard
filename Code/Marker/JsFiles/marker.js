@@ -1,6 +1,25 @@
 $(document).ready(function() {
-  requestDropBoxContentUsingJQuery();
+
+
 });
+
+//loads page when a button is pressed and load it into a div
+function loadPage(page) {
+  $("#displayBody").load(page);
+}
+
+//the php file path starts from the location of Marker.html file and not this js file
+function requestDropBoxContentUsingJQuery() {
+  $.post("PhpFiles/markerManager.php", {
+
+    request: "DropBoxContent"
+
+  }, function(data, status) {
+    if (status == "success") {
+      setDropBox("selectTeam", data.split(","));
+    }
+  });
+}
 
 function setDropBox(elementName, data) {
   var subArray = data;
@@ -14,29 +33,148 @@ function setDropBox(elementName, data) {
   }
 }
 
-//the php file path starts from the location of Marker.html file and not this js file
-function requestDropBoxContentUsingJQuery() {
-  $.get("PhpFiles/markerManager.php", function(data, status) {
-        if (status == "success") {
-      setDropBox("selectTeam", data.split(","));
-    }
-  });
+
+function selectToBeMarked(field) {
+
+  var element = document.getElementById(field).value;
+
+  var hiddenUserName = $("#hiddenUserName").val();
+  var hiddenCompId = $("#hiddenCompId").val();
+
+  if (element.length > 0) {
+    element = element.toUpperCase();
+    $.post("PhpFiles/selectTeam.php", {
+
+      marker: hiddenUserName,
+      compId:hiddenCompId,
+      selectTeam: element
+
+    }, function(data, status) {
+      if (status == "success") {
+        var obj = jQuery.parseJSON(data);
+        if (obj.result == false) {
+          alert(obj.error);
+        } else {
+          alert(obj.error);
+          var teamA = document.getElementById("teamA");
+          var teamB = document.getElementById("teamB");
+
+          if (typeof teamA.value === "undefined") {
+            teamA.innerHTML = "<b>" + element + "</b>";
+          } else {
+            if (typeof teamB.value === "undefined") {
+              teamB.innerHTML = "<b>" + element + "</b>";
+            }
+          }
+        }
+      }
+    });
+  } else {
+    alert("You must Select Team first");
+  }
 }
 
-function sendRequestDropBoxContentUsingJS() {
-  var xhr = createRequest(); // get XMLHttpRequest object
-  xhr.open("POST", "PhpFiles/markerManager.php", true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) { // response is success
-      var data = xhr.responseText; // print message to the allocate part
-      setDropBox("selectTeam", data.split(","));
-    } // end if
-  } // end anonymous call-back function
-  xhr.send(); // send request to php file
+function correctAnswer() {
+  var sure = confirm('Are you sure you wish to mark this question as Correct?');
+  if (sure) {
+    var pageName = $("#PageName").val();
+    var currQuestion = $("#currQuestionHeading").val();
+    var hiddenUserName = $("#hiddenUserName").val();
+    var hiddenCompId = $("#hiddenCompId").val();
+    var hiddenTeamInitial = $("#hiddenTeamInitial").val();
+
+    $.post("PhpFiles/markerManager.php", {
+
+      request: "Correct",
+      currentQuestion: currQuestion,
+      userName: hiddenUserName,
+      compId: hiddenCompId,
+      teamInitials: hiddenTeamInitial
+
+    }, function(data, status) {
+      if (status == "success") {
+        loadPage(pageName);
+      }
+    });
+  }
 }
 
-//loads page when a button is pressed and load it into a div
-function loadPage(page) {
-  $("#displayBody").load(page);
+function IncorrectAnswer() {
+
+  var sure = confirm('Are you sure you wish to mark this question as Correct?');
+  if (sure) {
+    var pageName = $("#PageName").val();
+    var currQuestion = $("#currQuestionHeading").val();
+    var hiddenUserName = $("#hiddenUserName").val();
+    var hiddenCompId = $("#hiddenCompId").val();
+    var hiddenTeamInitial = $("#hiddenTeamInitial").val();
+
+    $.post("PhpFiles/markerManager.php", {
+
+      request: "Incorrect",
+      currentQuestion: currQuestion,
+      userName: hiddenUserName,
+      compId: hiddenCompId,
+      teamInitials: hiddenTeamInitial
+
+    }, function(data, status) {
+      if (status == "success") {
+        loadPage(pageName);
+      }
+    });
+  }
+
+}
+
+function undo() {
+  var sure = confirm('Are you sure you return to the previous question?');
+
+  if (sure) {
+    var pageName = $("#PageName").val();
+    var currQuestion = $("#currQuestionHeading").val();
+    var hiddenUserName = $("#hiddenUserName").val();
+    var hiddenCompId = $("#hiddenCompId").val();
+    var hiddenTeamInitial = $("#hiddenTeamInitial").val();
+
+    $.post("PhpFiles/markerManager.php", {
+
+      request: "Undo",
+      currentQuestion: currQuestion,
+      userName: hiddenUserName,
+      compId: hiddenCompId,
+      teamInitials: hiddenTeamInitial
+
+    }, function(data, status) {
+      if (status == "success") {
+        loadPage(pageName);
+      }
+    });
+  }
+}
+
+function pass() {
+  var sure = confirm('Are you sure you wish to pass this question?');
+  if (sure) {
+
+    var pageName = $("#PageName").val();
+    var currQuestion = $("#currQuestionHeading").val();
+    var hiddenUserName = $("#hiddenUserName").val();
+    var hiddenCompId = $("#hiddenCompId").val();
+    var hiddenTeamInitial = $("#hiddenTeamInitial").val();
+
+    $.post("PhpFiles/markerManager.php", {
+
+      request: "Pass",
+      currentQuestion: currQuestion,
+      userName: hiddenUserName,
+      compId: hiddenCompId,
+      teamInitials: hiddenTeamInitial
+
+    }, function(data, status) {
+      if (status == "success") {
+        loadPage(pageName);
+      }
+    });
+  }
+
 }

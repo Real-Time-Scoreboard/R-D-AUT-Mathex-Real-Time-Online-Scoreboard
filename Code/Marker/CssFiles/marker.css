@@ -3,18 +3,12 @@ body {
   overflow-y: hidden;
 }
 
-.row {
-  height: 20%;
-}
+.header {
 
-.thumbnail {
-  height: 100%;
-}
+text-align: center;
+background: none;
+height: 15%;
 
-.img-thumbnail {
-  height: 100%;
-  width: 100%;
-  border-width: 0;
 }
 
 .no-gutters {
@@ -27,7 +21,7 @@ body {
 }
 
 .pageBorder {
-  height: 79%;
+  height: 85%;
   border-style: solid;
   border-width: 2px;
   border-color: Black;
@@ -45,6 +39,7 @@ ul.nav li {
 ul.nav li:hover {
   background-color: lightblue;
   text-decoration: underline;
+  cursor:pointer;
 }
 
 ul.nav li.nav-item {}

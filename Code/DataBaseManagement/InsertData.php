@@ -13,16 +13,6 @@ function insertNewUser($dbConn, $userName, $name, $psw, $priv)
   pg_escape_string($psw),pg_escape_string($priv)));
 }
 
-function insertNewCompetition($dbConn, $competitionid) {
-  $query =  "INSERT INTO Competition (competitionid) VALUES ('$competitionid')";
-  return $result = pg_query($dbConn, $query);
-}
-
-function insertNewTeam($dbConn, $teamInitials, $teamName) {
-  $query =  "INSERT INTO team VALUES ('$teamInitials', '$teamName')";
-  return $result = pg_query($dbConn, $query);
-}
-
 function insertIntoCompetition($dbConn, $compID, $startTime)
 {
   //$query = "INSERT INTO Competition (competitionId, startTime, competitionDate)
@@ -54,6 +44,12 @@ function insertFullNewTeamRecord($dbConn, $v1, $v2, $v3, $v4, $v5, $v6, $v7)
     (competitionid,teaminitials,assigned,currentquestion,totalcorrectquestions,totalpasses,currentscore)
     VALUES ($1,$2,$3,$4,$5,$6,$7)");
   return $result = pg_execute($dbConn, "createFullNewRecord_query", array($v1, $v2, $v3, $v4, $v5, $v6, $v7));
+}
+
+function selectTeam($dbConn, $teamName)
+{
+    $query = "SELECT teamInitials from team WHERE";
+    return $result = pg_query($dbConn, $query);
 }
 
 ?>
