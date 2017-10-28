@@ -1,6 +1,7 @@
 <?php
-include '../ConnectionManager.php';
-include '../SelectData.php';
+	session_start();
+	include '../DatabaseManagement/ConnectionManager.php';
+	include '../DatabaseManagement/SelectData.php';
 ?>
 
 <!DOCTYPE html>
@@ -37,14 +38,31 @@ include '../SelectData.php';
 		?>
 			<h2>Search for the team you wish to track here:</h2>
 
-			<select name="teams">
-				<option value="">Select Team</option>
-				<?php
-				foreach($allTeams as $key => $value):
-					echo '<option value="'.$value.'">'.$value.'</option>'; //close your tags!!
-				endforeach;
-				?>
-			</select>
+			<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+				<input list="teams" name="selectedTeam">
+				<datalist id="teams">
+					<option value="">Select Team</option>
+					<?php
+					foreach($allTeams as $key => $value):
+						echo '<option value="'.$value.'">'.$value.'</option>';
+					endforeach;
+					?>
+				</datalist>
+				<button type="submit">Track Team</button>
+			</form>
+
+			<?php
+				if (isset($_POST['selectedTeam'])) {
+					$row = selectTeam($dbConn, "DUMMY", $_POST['selectedTeam']);
+					if (isset($row[0])) {
+						$_SESSION['selectedTeam'] = $_POST['selectedTeam'];
+					}
+				}
+				if (isset($_SESSION['selectedTeam'])) {
+					echo "You are currently tracking " . $_SESSION['selectedTeam'];
+
+				}
+			?>
 
 	<br>
 </div>
