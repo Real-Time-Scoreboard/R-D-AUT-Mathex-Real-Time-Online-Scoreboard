@@ -5,9 +5,9 @@
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullname'];
 	}
-	include '../ConnectionManager.php';
-	include '../InsertData.php';
-	include '../SelectData.php';
+	include '../DataBaseManagement/ConnectionManager.php';
+	include '../DataBaseManagement/InsertData.php';
+	include '../DataBaseManagement/SelectData.php';
 ?>
 
 <!DOCTYPE html>

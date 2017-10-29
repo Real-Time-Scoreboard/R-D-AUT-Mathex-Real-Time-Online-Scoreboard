@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	include '../DatabaseManagement/ConnectionManager.php';
-	include '../DatabaseManagement/SelectData.php';
+	include '../DataBaseManagement/DataBaseManagement/ConnectionManager.php';
+	include '../DataBaseManagement/DataBaseManagement/SelectData.php';
 ?>
 
 <!DOCTYPE html>
