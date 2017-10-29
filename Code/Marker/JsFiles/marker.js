@@ -8,80 +8,16 @@ function loadPage(page) {
   $("#displayBody").load(page);
 }
 
-//the php file path starts from the location of Marker.html file and not this js file
-function requestDropBoxContentUsingJQuery() {
-  $.post("PhpFiles/markerManager.php", {
-
-    request: "DropBoxContent"
-
-  }, function(data, status) {
-    if (status == "success") {
-      setDropBox("selectTeam", data.split(","));
-    }
-  });
-}
-
-function setDropBox(elementName, data) {
-  var subArray = data;
-  var element = document.getElementById(elementName); // set id of field to be updated
-  var opt;
-  for (i = 0; i < subArray.length; i++) { // repeats for the number of suburbs
-    opt = document.createElement('option'); //create option tag for select button dropdown feature
-    opt.value = subArray[i]; // set its value equal to its name
-    opt.innerHTML = subArray[i]; // set its description equal to its name
-    element.appendChild(opt); // insert option tag to select dropdown list
-  }
-}
-
-
-function selectToBeMarked(field) {
-
-  var element = document.getElementById(field).value;
-
-  var hiddenUserName = $("#hiddenUserName").val();
-  var hiddenCompId = $("#hiddenCompId").val();
-
-  if (element.length > 0) {
-    element = element.toUpperCase();
-    $.post("PhpFiles/selectTeam.php", {
-
-      marker: hiddenUserName,
-      compId:hiddenCompId,
-      selectTeam: element
-
-    }, function(data, status) {
-      if (status == "success") {
-        var obj = jQuery.parseJSON(data);
-        if (obj.result == false) {
-          alert(obj.error);
-        } else {
-          alert(obj.error);
-          var teamA = document.getElementById("teamA");
-          var teamB = document.getElementById("teamB");
-
-          if (typeof teamA.value === "undefined") {
-            teamA.innerHTML = "<b>" + element + "</b>";
-          } else {
-            if (typeof teamB.value === "undefined") {
-              teamB.innerHTML = "<b>" + element + "</b>";
-            }
-          }
-        }
-      }
-    });
-  } else {
-    alert("You must Select Team first");
-  }
-}
-
 function correctAnswer() {
   var sure = confirm('Are you sure you wish to mark this question as Correct?');
   if (sure) {
     var pageName = $("#PageName").val();
-    var currQuestion = $("#currQuestionHeading").val();
+    var currQuestion = $("#hiddenCurrQuestion").val();
     var hiddenUserName = $("#hiddenUserName").val();
     var hiddenCompId = $("#hiddenCompId").val();
     var hiddenTeamInitial = $("#hiddenTeamInitial").val();
+
+    var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
 
     $.post("PhpFiles/markerManager.php", {
 
@@ -93,7 +29,9 @@ function correctAnswer() {
 
     }, function(data, status) {
       if (status == "success") {
-        loadPage(pageName);
+        $("#hiddenCurrQuestion").val(parseInt(currQuestion) + 1);
+        $("#currQuestionHeading").text(parseInt(currQuestion) + 1);
+        setCookie(cookieName, "Correct", 1);
       }
     });
   }
@@ -104,11 +42,12 @@ function IncorrectAnswer() {
   var sure = confirm('Are you sure you wish to mark this question as Correct?');
   if (sure) {
     var pageName = $("#PageName").val();
-    var currQuestion = $("#currQuestionHeading").val();
+    var currQuestion = $("#hiddenCurrQuestion").val();
     var hiddenUserName = $("#hiddenUserName").val();
     var hiddenCompId = $("#hiddenCompId").val();
     var hiddenTeamInitial = $("#hiddenTeamInitial").val();
 
+    var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
     $.post("PhpFiles/markerManager.php", {
 
       request: "Incorrect",
@@ -119,7 +58,7 @@ function IncorrectAnswer() {
 
     }, function(data, status) {
       if (status == "success") {
-        loadPage(pageName);
+        setCookie(cookieName, "Incorrect", 1);
       }
     });
   }
@@ -131,24 +70,41 @@ function undo() {
 
   if (sure) {
     var pageName = $("#PageName").val();
-    var currQuestion = $("#currQuestionHeading").val();
+    var currQuestion = $("#hiddenCurrQuestion").val();
     var hiddenUserName = $("#hiddenUserName").val();
     var hiddenCompId = $("#hiddenCompId").val();
     var hiddenTeamInitial = $("#hiddenTeamInitial").val();
 
-    $.post("PhpFiles/markerManager.php", {
+    var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
+    var cookie = checkCookie(hiddenCompId + hiddenTeamInitial + "previousQuestion");
+  
+    if (cookie === "none" || currQuestion <= 0) {
+      alert("You can't undo. No Previous Action registered or current question number is 0");
+    } else {
 
-      request: "Undo",
-      currentQuestion: currQuestion,
-      userName: hiddenUserName,
-      compId: hiddenCompId,
-      teamInitials: hiddenTeamInitial
+      $.post("PhpFiles/markerManager.php", {
 
-    }, function(data, status) {
-      if (status == "success") {
-        loadPage(pageName);
-      }
-    });
+        request: "Undo",
+        currentQuestion: currQuestion,
+        userName: hiddenUserName,
+        compId: hiddenCompId,
+        teamInitials: hiddenTeamInitial,
+        prevAction: cookie
+
+      }, function(data, status) {
+        if (status == "success") {
+          $("#hiddenCurrQuestion").val(parseInt(currQuestion) - 1);
+          $("#currQuestionHeading").text(parseInt(currQuestion) - 1);
+
+          var obj = jQuery.parseJSON(data);
+          if (obj.result == false) {
+            alert(obj.error);
+          }
+        }
+      });
+
+    }
+
   }
 }
 
@@ -157,10 +113,12 @@ function pass() {
   if (sure) {
 
     var pageName = $("#PageName").val();
-    var currQuestion = $("#currQuestionHeading").val();
+    var currQuestion = $("#hiddenCurrQuestion").val();
     var hiddenUserName = $("#hiddenUserName").val();
     var hiddenCompId = $("#hiddenCompId").val();
     var hiddenTeamInitial = $("#hiddenTeamInitial").val();
+
+    var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
 
     $.post("PhpFiles/markerManager.php", {
 
@@ -172,9 +130,43 @@ function pass() {
 
     }, function(data, status) {
       if (status == "success") {
-        loadPage(pageName);
+        $("#hiddenCurrQuestion").val(parseInt(currQuestion) + 1);
+        $("#currQuestionHeading").text(parseInt(currQuestion) + 1);
+        setCookie(cookieName, "Pass", 1);
       }
     });
   }
 
+}
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkCookie(cname) {
+  var cookie = getCookie(cname);
+  if (cookie != "") {
+    return cookie;
+  } else {
+    return "none";
+  }
 }

@@ -36,6 +36,17 @@ if(isset($_POST['selectTeam'])){
       }
     }
 
+}else{
+  $initials = $_POST['unselectTeam'];
+  $compId = $_POST['compId'];
+
+  if(deselectTeam($dbConn, $compId, $initials)){
+    $msg -> result = true;
+    $msg -> error = "Team has been deselected successfully";
+  }else{
+    $msg -> result = false;
+    $msg -> error = "Deselected Failed";
+  }
 }
 
 

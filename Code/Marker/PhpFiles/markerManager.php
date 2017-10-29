@@ -9,6 +9,9 @@ include '../../DataBaseManagement/UpdateData.php';
 
 $dbConn = openConnection();
 
+$msg = (object) [];
+$msg -> result = true;
+
 if(isset($_POST['request'])){
 
   $request = $_POST['request'];
@@ -54,10 +57,24 @@ if(isset($_POST['request'])){
       updateTeamRecord($dbConn, $compId, $initials, $TeamRecord['assigned'], $currquestion+1, $totalcorrectquestions + 1,$totalpasses ,$score+5);
           break;
       case "Undo":
-          updateTeamRecord($dbConn, $compId, $initials, $TeamRecord['assigned'], $currquestion-1, $totalcorrectquestions ,$totalpasses ,$score);
+            $prevAction = $_POST['prevAction'];
+
+            if($prevAction ==="Correct"){
+              updateTeamRecord($dbConn, $compId, $initials, $TeamRecord['assigned'], $currquestion-1, $totalcorrectquestions-1,$totalpasses ,$score-5);
+            }
+            if($prevAction === "Pass"){
+              updateTeamRecord($dbConn, $compId, $initials, $TeamRecord['assigned'], $currquestion-1, $totalcorrectquestions,$totalpasses-1,$score);
+            }
+            if($prevAction === "Undo"){
+              $msg -> result = false;
+              $msg -> error = "You can't undo more than Once";
+            }
+
           break;
       case "Pass":
+
           updateTeamRecord($dbConn, $compId, $initials, $TeamRecord['assigned'], $currquestion+1, $totalcorrectquestions,$totalpasses+1 ,$score);
+
           break;
       case "Incorrect":
 
@@ -66,6 +83,7 @@ if(isset($_POST['request'])){
 }
 
  closeConn($dbConn);
+ echo json_encode($msg);
 
 
 ?>

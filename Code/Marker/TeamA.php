@@ -1,25 +1,22 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="CssFiles/marker.css">
-	<script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="JsFiles/cookies.js"></script>
-	<script type="text/javascript" src="JsFiles/marker.js"></script>
-	<script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
-</head>
-
 <?php
 
 include '../DataBaseManagement/ConnectionManager.php';
 include '../DataBaseManagement/SelectData.php';
 
-$dbConn = openConnection();
-$compId = selectCurrentComp($dbConn);
+// Start the session
+session_start();
+
 $userName = "Marker01";
+$compId;
+
+if (isSet($_SESSION['userName']) && isSet($_SESSION['fullName'])){
+  $userName = $_SESSION['userName'];
+}
+if(isSet( $_SESSION['compId'])){
+  $compId = $_SESSION['compId'];
+}
+
+$dbConn = openConnection();
 
 $team = array("","");
 $result = getMakerAssignedTeam($dbConn,$compId, $userName);
@@ -38,22 +35,63 @@ if($teamInfo != false) {
 	$row1 = pg_fetch_assoc($teamInfo);
 	$currquestion =$row1['currentquestion'];
 }
+closeConn($dbConn);
 
- ?>
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CssFiles/marker.css">
+  <link rel="stylesheet" href="CssFiles/modal.css">
+	<script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="JsFiles/modal.js"></script>
+	<script type="text/javascript" src="JsFiles/marker.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
+</head>
+
 
 <body>
 
 	<input type="hidden" id="PageName" value="TeamA.php" />
-	<input type="hidden" id="hiddenUserName" value=<?php echo $userName ?> />
-	<input type="hidden" id="hiddenCompId" value=<?php echo $compId ?> />
 	<input type="hidden" id="hiddenTeamInitial" value=<?php echo $team[0] ?> />
-	<input type="hidden" id="currQuestionHeading" value=<?php echo $currquestion ?> />
+	<input type="hidden" id="hiddenCurrQuestion" value=<?php echo $currquestion ?> />
 
+
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Team History</h2>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the Modal Body</p>
+        <p>Previous entries</p>
+      </div>
+    </div>
+  </div>
 
 	<div class="mx-auto text-center" id="teamSelectedShow">
+
+
+      <div class="text-right my-2 mx-5" id="teamSelectedShow">
+        <!-- Trigger/Open The Modal -->
+        <button class = "btn btn-default  historyBtn" id="myBtn">History</button>
+
+      </div>
+
+
 		<h2>TEAM: <?php  if ($team[0] == ""){echo "No Team Selected";} else { echo  $team[0];} ?></h2>
 		<h3> Current Question: </h3>
-		<h3><?php echo $currquestion ?></h3>
+		<h3 id="currQuestionHeading"><?php echo $currquestion ?></h3>
 
 		<div class="row btn-group my-5">
 
@@ -74,8 +112,8 @@ if($teamInfo != false) {
 	      </div>
 
 			</div>
-	</div>
 
+	</div>
 
 </body>
 

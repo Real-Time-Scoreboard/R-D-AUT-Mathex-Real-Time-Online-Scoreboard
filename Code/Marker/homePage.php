@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+$name ;
+
+if (isSet($_SESSION['fullName'])){
+  $name =  $_SESSION['fullName'];
+
+}
+
+?>
+
 <!DOCTYPE html5>
 <html lang="en">
 
@@ -7,16 +19,16 @@
   <link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="CssFiles/marker.css">
   <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="JsFiles/cookies.js"></script>
   <script type="text/javascript" src="JsFiles/marker.js"></script>
   <script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-  <div class="mx-auto text-center" id="homePage">
+
+  <div class="mx-auto text-center center_div" id="homePage">
     <h1>Welcome to MATHEX Marker's System</h1>
 
-    <p>Logged as: </p>
+    <p>Logged as: <?php echo $name?></p>
     <p>Please select the teams you want to mark to get started</p>
     <p>Go to the tab "Select Team"</p>
   </div </body>
