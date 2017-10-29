@@ -48,5 +48,19 @@ function assignMarkertoTeam($dbConn, $compId, $initials, $userName)
     return $result = pg_execute($dbConn, "UpdateRecordMarker_query", array(1, $userName,$compId, $initials));
 }
 
+function deselectTeam($dbConn, $compId, $initials)
+{
+    $result = pg_prepare($dbConn, "UpdateRecordMarker_query", "UPDATE TeamRecord
+    SET
+    	assigned = $1,
+    	userName = $2
+    Where
+    competitionId = $3
+    AND
+    teamInitials = $4
+    ");
+    return $result = pg_execute($dbConn, "UpdateRecordMarker_query", array(0, null,$compId, $initials));
+}
+
 
 ?>
