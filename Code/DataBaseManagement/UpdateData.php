@@ -62,5 +62,15 @@ function deselectTeam($dbConn, $compId, $initials)
     return $result = pg_execute($dbConn, "UpdateRecordMarker_query", array(0, null,$compId, $initials));
 }
 
+function deleteTeam($dbConn, $teamName, $teamInitials) {
+  $query = "DELETE FROM team WHERE teamname = '$teamName' AND teaminitials = '$teamInitials'";
+  return $result = pg_query($dbConn, $query);
+}
+
+function deleteUser($dbConn, $userName, $fullName) {
+  $query = "DELETE FROM privilegeduser WHERE username = '$userName' AND fullname = '$fullName'";
+  return $result = pg_query($dbConn, $query);
+}
+
 
 ?>
