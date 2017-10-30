@@ -8,6 +8,7 @@
 	include '../DataBaseManagement/ConnectionManager.php';
 	include '../DataBaseManagement/InsertData.php';
 	include '../DataBaseManagement/SelectData.php';
+	include '../DataBaseManagement/UpdateData.php';
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +57,21 @@
 					$row = selectTeam($dbConn, strtoupper($_POST['teamInitials']), strtoupper($_POST['teamName']));
 
 					if (!$row[0]) {
-						insertNewTeam($dbConn, $_POST['teamInitials'], $_POST['teamName']);
+						insertIntoTeam($dbConn, $_POST['teamInitials'], $_POST['teamName']);
 						echo $msg = $_POST['teamName'] . " has been successfully created!";
 					} else {
 						echo "That team already exists!";
+					}
+				}
+			}
+			if (isset($_POST['teamnametodelete']) && isset($_POST['teaminitialstodelete'])) {
+				$dbConn = openConnection();
+				if (!$dbConn) {
+					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+				} else {
+					$result = deleteTeam($dbConn, $_POST['teamnametodelete'], $_POST['teaminitialstodelete']);
+					if (isset($result)) {
+						echo $_POST['teamnametodelete'] . " has been successfully deleted!";
 					}
 				}
 			}
@@ -68,27 +80,33 @@
 		<br>
 		<h2>Existing Teams:</h2>
 		<!-- List of Teams -->
-		<table style="width:35%">
+		<table style="width:80%">
 			<tr>
 				<th>Team Name</th>
 				<th>Team Initials</th>
 				<th>Delete</th>
 			</tr>
-			<tr>
-				<td>Team A</td>
-				<td>ABC</td>
-				<td><button id="delete" onclick="confirm('Are you sure you wish to delete this team from the system?')">Delete</button></td>
-			</tr>
-			<tr>
-				<td>Team B</td>
-				<td>BCD</td>
-				<td><button id="delete" onclick="confirm('Are you sure you wish to delete this team from the system?')">Delete</button></td>
-			</tr>
-			<tr>
-				<td>Team C</td>
-				<td>CDE</td>
-				<td><button id="delete" onclick="confirm('Are you sure you wish to delete this team from the system?')">Delete</button></td>
-			</tr>
+			<?php
+
+				$dbConn = openConnection();
+				if (!$dbConn) {
+					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+				} else {
+					$result = selectAllTeams($dbConn);
+
+					while ($row = pg_fetch_array($result)) {
+						echo "<tr>";
+						echo "<td>" . $row[1] . "</td>";
+						echo "<td>" . $row[0] . "</td>";
+						echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
+											<input type="hidden" name="teamnametodelete" value="', $row[1], '">
+											<input type="hidden" name="teaminitialstodelete" value="', $row[0], '">
+											<button type="submit" id="delete" onclick="return confirm(\'Are you sure you wish to delete this team?\');">Delete</button>
+											</form></td>';
+						echo "</tr>";
+					}
+				}
+			?>
 		</table>
 	</div>
 </body>

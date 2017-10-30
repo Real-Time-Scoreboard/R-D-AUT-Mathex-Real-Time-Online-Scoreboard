@@ -8,6 +8,7 @@
 	include '../DataBaseManagement/ConnectionManager.php';
 	include '../DataBaseManagement/InsertData.php';
 	include '../DataBaseManagement/SelectData.php';
+	include '../DataBaseManagement/UpdateData.php';
 ?>
 
 <!DOCTYPE html>
@@ -59,10 +60,21 @@
 					$row = selectUser($dbConn, $_POST['username'], $_POST['fullname'], $_POST['password'], $_POST['privilege']);
 
 					if (!$row[0]) {
-						insertUser($dbConn, $_POST['username'], $_POST['fullname'], $_POST['password'], $_POST['privilege']);
+						insertNewUser($dbConn, $_POST['username'], $_POST['fullname'], $_POST['password'], $_POST['privilege']);
 						echo $msg = "User " . $_POST['username'] . " has been successfully created!";
 					} else {
 						echo "That User already exists!";
+					}
+				}
+			}
+			if (isset($_POST['usernametodelete']) && isset($_POST['fullnametodelete'])) {
+				$dbConn = openConnection();
+				if (!$dbConn) {
+					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+				} else {
+					$result = deleteUser($dbConn, $_POST['usernametodelete'], $_POST['fullnametodelete']);
+					if (isset($result)) {
+						echo "User " . $_POST['usernametodelete'] . " has been successfully deleted!";
 					}
 				}
 			}
@@ -71,31 +83,41 @@
 		<br>
 		<h2>Existing Users:</h2>
 		<!-- List of Users -->
-		<table style="width:55%">
+		<table style="width:90%">
 			<tr>
 				<th>User ID</th>
 				<th>Full name</th>
 				<th>Password</th>
 				<th>Privilege</th>
+				<th>Delete</th>
 			</tr>
-			<tr>
-				<td><a href="editUser.php">User A</a></td>
-				<td>Bill English</td>
-				<td>Password A</td>
-				<td>Admin</td>
-			</tr>
-			<tr>
-				<td><a href="editUser.php">User B</a></td>
-				<td>Winston Peters</td>
-				<td>Password B</td>
-				<td>Marker</td>
-			</tr>
-			<tr>
-				<td><a href="editUser.php">User C</a></td>
-				<td>Jacinda Ardern</td>
-				<td>Password C</td>
-				<td>Marker</td>
-			</tr>
+			<?php
+
+				$dbConn = openConnection();
+				if (!$dbConn) {
+					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+				} else {
+					$result = selectAllUsers($dbConn);
+
+					while ($row = pg_fetch_array($result)) {
+						echo "<tr>";
+						echo "<td>" . $row[0] . "</td>";
+						echo "<td>" . $row[1] . "</td>";
+						echo "<td>" . $row[2] . "</td>";
+						echo "<td>" . $row[3] . "</td>";
+						if ($row[1] != $_SESSION['fullname']) {
+							echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
+												<input type="hidden" name="usernametodelete" value="', $row[0], '">
+												<input type="hidden" name="fullnametodelete" value="', $row[1], '">
+												<button type="submit" id="delete" onclick="return confirm(\'Are you sure you wish to delete this team?\');">Delete</button>
+												</form></td>';
+						} else {
+							echo "<td>Logged In</td>";
+						}
+						echo "</tr>";
+					}
+				}
+			?>
 		</table>
 	</div>
 </body>
