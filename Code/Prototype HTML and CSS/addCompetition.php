@@ -71,14 +71,28 @@
 				<td><a href="competitionAdmin.php">Competition A</a></td>
 				<td>No</td>
 			</tr>
-			<tr>
-				<td><a href="competitionAdmin.php">Competition B</a></td>
-				<td>No</td>
-			</tr>
-			<tr>
-				<td><a href="competitionAdmin.php">Competition C</a></td>
-				<td>No</td>
-			</tr>
+			<?php
+
+				$dbConn = openConnection();
+				if (!$dbConn) {
+					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+				} else {
+					$result = selectAllCompetitions($dbConn);
+
+					while ($row = pg_fetch_array($result)) {
+						echo "<tr>";
+						echo "<td><a href='competitionAdmin.php?id=" . $row[0] . "'>$row[0]</a></td>";
+						echo "<td>";
+						if ($row[2]) {
+							echo "Yes";
+						} else {
+							echo "No";
+						}
+						echo "</td>";
+						echo "</tr>";
+					}
+				}
+			?>
 		</table>
 
 	</div>
