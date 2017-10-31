@@ -83,11 +83,6 @@ function selectAllActiveTeams($dbConn, $activeCompetition) {
   return pg_query($dbConn, $query);
 }
 
-function selectAllTeamsNotInCompetition($dbConn, $activeCompetition) {
-  $query = "SELECT * FROM team INNER JOIN TeamRecord ON team.teamInitials = TeamRecord.teamInitials WHERE competitionid != '$activeCompetition' ORDER BY teamname DESC";
-  return pg_query($dbConn, $query);
-}
-
 function selectAllTeams($dbConn) {
   $query = "SELECT * FROM team ORDER BY teamname DESC";
   return pg_query($dbConn, $query);
