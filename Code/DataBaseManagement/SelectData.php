@@ -107,6 +107,11 @@ function selectStartTime($dbConn, $activeCompetition){
   return pg_fetch_row(pg_query($dbConn, $query))[0];
 }
 
+function getCompetitionStatus($dbConn, $activeCompetition) {
+  $query = "SELECT active FROM competition WHERE competitionid = '$activeCompetition'";
+  return pg_fetch_row(pg_query($dbConn, $query))[0];
+}
+
 function selectTopTeam($dbConn, $activeCompetition){
   $query = "SELECT teaminitials, currentscore, currentQuestion, totalCorrectQuestions, totalPasses FROM TeamRecord WHERE competitionId = '$activeCompetition' ORDER BY currentscore DESC LIMIT 1";
   return pg_query($dbConn, $query);

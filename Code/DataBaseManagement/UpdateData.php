@@ -77,5 +77,9 @@ function deleteTeamRecord($dbConn, $teamInitials, $competitionid) {
   return $result = pg_query($dbConn, $query);
 }
 
+function deleteCompetition($dbConn, $competitionid) {
+  $query = "DELETE FROM competition WHERE competitionid = '$competitionid'";
+  return $result = pg_query($dbConn, $query);
+}
 
 ?>
