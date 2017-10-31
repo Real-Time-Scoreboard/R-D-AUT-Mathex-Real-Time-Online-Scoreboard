@@ -36,11 +36,34 @@
 
 		<?php echo $msg; ?>
 
-		<h2>Competition <?php echo $_SESSION['selectedCompetition'] ?> Status: INACTIVE</h2>
+		<h2>Competition <?php echo $_SESSION['selectedCompetition'] ?> Status:
+			<?php
+				$dbConn = openConnection();
+
+				if (isset($_POST['start'])) {
+					$time = date("h:i:s");
+					updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'],  $time, true);
+				}
+
+				$result = getCompetitionStatus($dbConn, $_SESSION['selectedCompetition']);
+				if ($result) {
+					echo "ACTIVE";
+				} else {
+					echo "INACTIVE";
+				}
+			?>
+		</h2>
 
 		<!-- Start competition or remove it from the system-->
-		<button id="start" onclick="confirm('Are you sure you wish to start this competition?')">Start</button>
-		<button id="remove" onclick="confirm('Are you sure you wish to delete this competition?')">Delete Competition</button>
+		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+			<input type="hidden" name="start" value="placeholder">
+			<button id="start" onclick="confirm('Are you sure you wish to start this competition?')">Start Competition</button>
+		</form>
+
+		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+			<input type="hidden" name="delete" value="placeholder">
+			<button id="remove" onclick="confirm('Are you sure you wish to delete this competition?')">Delete Competition</button>
+		</form>
 
 		<br>
 		<h2>Current Teams: </h2>
@@ -52,8 +75,6 @@
 				<th>Remove</th>
 			</tr>
 			<?php
-
-				$dbConn = openConnection();
 				if (!$dbConn) {
 					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
 				} else {
@@ -75,6 +96,11 @@
 					if (isset($_POST['teamInitialstodelete'])) {
 						deleteTeamRecord($dbConn, $_POST['teamInitialstodelete'], $_SESSION['selectedCompetition']);
 						echo "Team " . $_POST['teamInitialstodelete'] . " has been sucessfully removed!";
+					}
+
+					if (isset($_POST['delete'])) {
+						deleteCompetition($dbConn, $_SESSION['selectedCompetition']);
+						header("Location: addCompetition.php");
 					}
 
 					$result = selectAllActiveTeams($dbConn, $_SESSION['selectedCompetition']);

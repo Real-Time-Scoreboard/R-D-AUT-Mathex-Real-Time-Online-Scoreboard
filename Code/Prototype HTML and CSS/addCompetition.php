@@ -50,7 +50,7 @@
 					$row = selectCompetitionID($dbConn, strtoupper($_POST['competitionid']));
 
 					if (!$row[0]) {
-						insertNewCompetition($dbConn, $_POST['competitionid']);
+						insertIntoCompetition($dbConn, $_POST['competitionid'], $time = date("h:i:s"));
 						echo $msg = $_POST['competitionid'] . " has been successfully created!";
 					} else {
 						echo "That competition already exists!";
@@ -66,10 +66,6 @@
 			<tr>
 				<th>Competition Name</th>
 				<th>Active</th>
-			</tr>
-			<tr>
-				<td><a href="competitionAdmin.php">Competition A</a></td>
-				<td>No</td>
 			</tr>
 			<?php
 
