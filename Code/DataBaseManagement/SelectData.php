@@ -121,10 +121,4 @@ function selectUser($dbConn, $username, $fullname, $password, $privilege) {
   return pg_fetch_row($result);
 }
 
-function selectUser($dbConn, $username, $fullname, $password, $privilege) {
-  $query = "SELECT * FROM privilegeduser WHERE username = '$username' AND fullname = '$fullname' AND password = '$password' AND privilege = '$privilege'";
-  $result = pg_query($dbConn, $query);
-  return pg_fetch_row($result);
-}
-
 ?>
