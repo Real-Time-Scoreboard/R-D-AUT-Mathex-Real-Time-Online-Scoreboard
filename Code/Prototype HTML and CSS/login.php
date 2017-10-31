@@ -37,8 +37,9 @@
 						$_SESSION['valid'] = true;
 						$_SESSION['privilege'] = $privilege;
 						$_SESSION['fullname'] = $fullname;
+            $_SESSION['username'] = $_POST["username"];
 						if ($privilege == 'Marker'){
-							header("Location: marker.php");
+							header("Location: ../Marker/MarkerMain.php");
 							exit();
 						} else if ($privilege == 'Admin'){
 							header("Location: addCompetition.php");
