@@ -72,5 +72,10 @@ function deleteUser($dbConn, $userName, $fullName) {
   return $result = pg_query($dbConn, $query);
 }
 
+function deleteTeamRecord($dbConn, $teamInitials, $competitionid) {
+  $query = "DELETE FROM TeamRecord WHERE teaminitials = '$teamInitials' AND competitionid = '$competitionid'";
+  return $result = pg_query($dbConn, $query);
+}
+
 
 ?>
