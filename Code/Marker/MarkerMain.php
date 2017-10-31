@@ -6,11 +6,12 @@ $fullName =  "Full Name";
 $userName = "Marker01";
 
 if (isSet($_SESSION['userName']) && isSet($_SESSION['fullName'])){
-  $fullName =  $_SESSION['fullname'];
+  $fullName =  $_SESSION['fullName'];
   $userName = $_SESSION['userName'];
 } else {
     //header("Location: invalidLogin.html");
-
+    $_SESSION['fullName'] = $fullName;
+    $_SESSION['userName'] = $userName;
 }
 
 include '../DataBaseManagement/ConnectionManager.php';
@@ -20,7 +21,7 @@ include '../DataBaseManagement/SelectData.php';
 $dbConn = openConnection();
 
 $compId = selectCurrentComp($dbConn);
-$_SESSION['compId'] =$compId;
+$_SESSION['compId'] = $compId;
 
 $team = array("","");
 $result = getMakerAssignedTeam($dbConn,$compId, $userName);
@@ -47,7 +48,7 @@ closeConn($dbConn);
   <link rel="stylesheet" href="CssFiles/marker.css">
   <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="JsFiles/marker.js"></script>
-  <script src="../bootstrap-4.0.0-beta-dist/js/popper.js"></script>
+  <script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
   <script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
 
 </head>
