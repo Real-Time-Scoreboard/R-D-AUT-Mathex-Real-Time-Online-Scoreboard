@@ -83,8 +83,6 @@
 	setActiveCompetition(activeCompetition);
 	var startTime = "<?php echo $startTime ?>";
 	setStartTime(startTime);
-
-
 	</script>
 
 </body>
