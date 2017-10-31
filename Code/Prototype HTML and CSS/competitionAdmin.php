@@ -60,8 +60,13 @@
 					if (isset($_POST['selectedTeam'])) {
 						$row = selectTeam($dbConn, $_POST['selectedTeam'], "DUMMY");
 						if (isset($row[0])) {
-							insertNewTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
-							echo "Team " . $_POST['selectedTeam'] . " has been sucessfully added to " . $_SESSION['selectedCompetition'];
+							$row = selectTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
+							if (!$row) {
+								insertNewTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
+								echo "Team " . $_POST['selectedTeam'] . " has been sucessfully added to the competition!";
+							} else {
+								echo "That team is already in the competition!";
+							}
 						} else {
 							echo "That team does not exist!";
 						}
@@ -96,7 +101,7 @@
 					if (!$dbConn) {
 						echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
 					} else {
-						$result = selectAllTeamsNotInCompetition($dbConn, $_SESSION['selectedCompetition']);
+						$result = selectAllTeams($dbConn);
 
 						$allTeams = array();
 						while ($row = pg_fetch_row($result)) {
