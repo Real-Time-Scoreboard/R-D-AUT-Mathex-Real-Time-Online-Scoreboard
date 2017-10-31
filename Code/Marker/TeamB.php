@@ -28,7 +28,10 @@ if (($count= pg_num_rows($result)) >= 1) {
 				$team[$x] = $row[0];
 
     }
+}else{
+    header("Location: NoTeamSelected.html");
 }
+
 $teamInfo = selectTeamRecord($dbConn,$compId, $team[1]);
 
 if($teamInfo != false) {

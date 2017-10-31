@@ -28,13 +28,16 @@ if (($count= pg_num_rows($result)) >= 1) {
 				$team[$x] = $row[0];
 
     }
+}else{
+    header("Location: NoTeamSelected.html");
 }
 $teamInfo = selectTeamRecord($dbConn,$compId, $team[0]);
 
 if($teamInfo != false) {
 	$row1 = pg_fetch_assoc($teamInfo);
-	$currquestion =$row1['currentquestion'];
+	$currquestion = $row1['currentquestion'];
 }
+
 closeConn($dbConn);
 
 ?>
@@ -61,8 +64,6 @@ closeConn($dbConn);
 	<input type="hidden" id="PageName" value="TeamA.php" />
 	<input type="hidden" id="hiddenTeamInitial" value=<?php echo $team[0] ?> />
 	<input type="hidden" id="hiddenCurrQuestion" value=<?php echo $currquestion ?> />
-
-
 
   <!-- The Modal -->
   <div id="myModal" class="modal">

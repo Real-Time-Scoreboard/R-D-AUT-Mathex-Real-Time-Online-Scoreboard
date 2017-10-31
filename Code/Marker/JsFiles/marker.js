@@ -77,9 +77,10 @@ function undo() {
 
     var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
     var cookie = checkCookie(hiddenCompId + hiddenTeamInitial + "previousQuestion");
-  
     if (cookie === "none" || currQuestion <= 0) {
       alert("You can't undo. No Previous Action registered or current question number is 0");
+    } else if (cookie === "Undo") {
+      alert("You can't undo more than once!");
     } else {
 
       $.post("PhpFiles/markerManager.php", {
@@ -95,6 +96,7 @@ function undo() {
         if (status == "success") {
           $("#hiddenCurrQuestion").val(parseInt(currQuestion) - 1);
           $("#currQuestionHeading").text(parseInt(currQuestion) - 1);
+          setCookie(cookieName, "Undo", 1);
 
           var obj = jQuery.parseJSON(data);
           if (obj.result == false) {
@@ -107,6 +109,7 @@ function undo() {
 
   }
 }
+
 
 function pass() {
   var sure = confirm('Are you sure you wish to pass this question?');
