@@ -8,7 +8,6 @@ function selectTeamInitials($dbConn)
 }
 
 function selectCurrentComp($dbConn){
-
   $query = "SELECT competitionid FROM competition where active = true";
   $result = pg_query($dbConn, $query);
   if (( pg_num_rows($result)) > 0) {
@@ -17,7 +16,6 @@ function selectCurrentComp($dbConn){
   } else {
       return false;
   }
-
 }
 
 function selectTeamRecord($dbConn,$compId, $teamName)
@@ -67,19 +65,13 @@ function selectPrivilegedUser($dbConn, $username, $password)
   return pg_fetch_row($result);
 }
 
-function selectActiveCompetition($dbConn){
-  $query = "SELECT competitionid FROM Competition WHERE active = 'true'";
-  $result = pg_query($dbConn, $query);
-  return pg_fetch_row($result)[0];
-}
-
 function selectTopScores($dbConn, $activeCompetition){
   $query = "SELECT teaminitials, currentscore FROM TeamRecord WHERE competitionid = '$activeCompetition' ORDER BY currentscore DESC LIMIT 5";
   return pg_query($dbConn, $query);
 }
 
 function selectAllActiveTeams($dbConn, $activeCompetition) {
-  $query = "SELECT * FROM team INNER JOIN TeamRecord ON team.teamInitials = TeamRecord.teamInitials WHERE competitionid = '$activeCompetition' ORDER BY teamname DESC";
+  $query = "SELECT * FROM team INNER JOIN TeamRecord ON team.teamInitials = TeamRecord.teamInitials WHERE competitionid = '$activeCompetition' ORDER BY teamname ASC";
   return pg_query($dbConn, $query);
 }
 
@@ -89,7 +81,7 @@ function selectAllTeamsNotInCompetition($dbConn, $activeCompetition) {
 }
 
 function selectAllTeams($dbConn) {
-  $query = "SELECT * FROM team ORDER BY teamname DESC";
+  $query = "SELECT * FROM team ORDER BY teamname ASC";
   return pg_query($dbConn, $query);
 }
 
@@ -109,16 +101,24 @@ function selectCompetitionID($dbConn, $competitionid) {
   return pg_fetch_row($result);
 }
 
-function selectTeam($dbConn, $teamInitials, $teamName) {
-  $query = "SELECT * FROM team WHERE teaminitials = '$teamInitials' OR teamname = '$teamName'";
-  $result = pg_query($dbConn, $query);
-  return pg_fetch_row($result);
-}
-
 function selectUser($dbConn, $username, $fullname, $password, $privilege) {
   $query = "SELECT * FROM privilegeduser WHERE username = '$username' AND fullname = '$fullname' AND password = '$password' AND privilege = '$privilege'";
   $result = pg_query($dbConn, $query);
   return pg_fetch_row($result);
 }
 
+function selectStartTime($dbConn, $activeCompetition){
+  $query = "SELECT starttime FROM competition WHERE competitionid = '$activeCompetition'";
+  return pg_fetch_row(pg_query($dbConn, $query))[0];
+}
+
+function selectTopTeam($dbConn, $activeCompetition){
+  $query = "SELECT teaminitials, currentscore, currentQuestion, totalCorrectQuestions, totalPasses FROM TeamRecord WHERE competitionId = '$activeCompetition' ORDER BY currentscore DESC LIMIT 1";
+  return pg_query($dbConn, $query);
+}
+
+function selectTeamData($dbConn, $activeCompetition, $selectedTeam){
+  $query = "SELECT teaminitials, currentscore, currentQuestion, totalCorrectQuestions, totalPasses FROM TeamRecord WHERE competitionId = '$activeCompetition' AND teaminitials = '$selectedTeam' LIMIT 1";
+  return pg_query($dbConn, $query);
+}
 ?>

@@ -16,8 +16,8 @@
 		<!-- Navigation bar -->
 		<ul class="navbar">
 			<li class="navbar"><a href="welcome.html">Home</a></li>
-			<li class="navbar"><a href="search.html">Search</a></li>
-			<li class="navbar"><a href="leaderboard.html">Leaderboard</a></li>
+			<li class="navbar"><a href="search.php">Search</a></li>
+			<li class="navbar"><a href="leaderboard.php">Leaderboard</a></li>
 			<li class="navbar"><a href="login.php" class="current">Login</a></li>
 		</ul>
 		<!--Login form-->
