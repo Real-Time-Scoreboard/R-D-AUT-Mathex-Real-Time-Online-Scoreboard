@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	include '../DataBaseManagement/DataBaseManagement/ConnectionManager.php';
-	include '../DataBaseManagement/DataBaseManagement/SelectData.php';
+	include '../DataBaseManagement/ConnectionManager.php';
+	include '../DataBaseManagement/SelectData.php';
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +28,11 @@
 			echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
 		} else {
 			$competitionid = selectActiveCompetition($dbConn);
-			$result = selectAllTeams($dbConn, $competitionid);
+			$result = selectAllActiveTeams($dbConn, $competitionid);
 
 			$allTeams = array();
 			while ($row = pg_fetch_row($result)) {
-				array_push($allTeams, $row[0]);
+				array_push($allTeams, $row[1]);
 			}
 		}
 		?>
