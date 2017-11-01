@@ -76,14 +76,13 @@ include '../DataBaseManagement/UpdateData.php';
 
 						//starts competition using the computer's current time
 						if (isset($_POST['start'])) {
-							$time = date("h:i:s");
 							$result = selectAllActiveCompetitions($dbConn);
 
 							while ($row = pg_fetch_array($result)) {
-								updateCompetitionEntry($dbConn, $row[0], $time, 'false');
+								updateCompetitionEntry($dbConn, $row[0], 'false');
 							}
 
-							updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'],  $time, 'true');
+							updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'], 'true');
 						}
 
 						//checks if competition is active or inactive
