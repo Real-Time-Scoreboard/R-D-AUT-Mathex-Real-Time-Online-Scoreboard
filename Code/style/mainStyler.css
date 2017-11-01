@@ -38,12 +38,6 @@ a[href]:hover {
   text-decoration: underline;
 }
 
-ul li:hover {
-  background-color: #111;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 li.nav-item:hover:not(.current) {
   background-color: green;
 }
