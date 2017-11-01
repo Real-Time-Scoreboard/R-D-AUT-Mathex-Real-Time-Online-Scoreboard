@@ -63,7 +63,7 @@
   							header("Location: ../Marker/MarkerMain.php");
   							exit();
   						} else if ($privilege == 'Admin'){
-  							header("Location: addCompetition.php");
+  							header("Location: ../Admin/addCompetition.php");
   							exit();
   						}
   					} else {
