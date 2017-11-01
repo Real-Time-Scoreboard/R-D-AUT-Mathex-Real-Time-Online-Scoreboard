@@ -21,69 +21,94 @@
 	$teamData = json_encode($teamData);
 ?>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE  html5>
+<html lang="en">
+
 <head>
 	<title>Leaderboard</title>
 	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
-	<link rel="stylesheet" href="style/mainStyle.css">
-	<link rel="stylesheet" href="style/leaderboardStyle.css">
-	<script src="node_modules/chart.js/dist/Chart.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../style/mainStyler.css">
+	<link rel="stylesheet" href="../style/leaderboardStyle.css">
+
+	<script src="../node_modules/chart.js/dist/Chart.min.js"></script>
 	<script type="text/javascript" src="xhr.js"></script>
 	<script type="text/javascript" src="leaderboard.js"></script>
+	<script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../style/menuSelector.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<h1>Leaderboard</h1>
-	<div class="content_container">
-		<!-- Navigation bar -->
-		<ul class="navbar">
-			<li class="navbar"><a href="welcome.html">Home</a></li>
-			<li class="navbar"><a href="search.php">Search</a></li>
-			<li class="navbar"><a href="leaderboard.php" class="current">Leaderboard</a></li>
-			<li class="navbar"><a href="login.php">Login</a></li>
-		</ul>
-		<!-- Timer -->
-		<div id="timer" style="text-align:right">Time Remaining: </div>
+	<div class="container">
+		<div class="content_container">
 
-		<div class="leaderboard-container">
-
-			<!-- Table for All Teams -->
-			<div class="other-components-container" id="mainDisplay">
-				<h2>Competition</h2>
-				<canvas id="myChart" width="400" height="250"></canvas>
-				<table id="leaderboard-table" style="width:50%"></table>
+			<div class="header">
+				<h1>Leaderboard</h1>
 			</div>
 
-			<div class="other-components-container">
-				<!-- Top Team -->
-				<div class="other-components-container" id="topTeam"></div>
+			<ul class="nav nav-fill bg-dark" id="my_menu ">
+				<li class="nav-item">
+					<a class="nav-link " href="welcome.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="search.php">Search Team</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link "  href="leaderboard.php">Leaderboard</a>
+				</li>
+				<li class="nav-item current">
+					<a class="nav-link" href="login.php">Login</a>
+				</li>
+			</ul>
 
-				<!-- My selected Team -->
-				<div class="other-components-container" id="myTeam"></div>
+			<div class="my-5">
 
-				<!-- Buttons to change view for the leaderboard -->
-				<div class="other-components-container" style="clear: left">
-					VIEW TYPE <br>
-					<button type="button" id="chartButton">Chart</button>
-					<button type="button" id="tableButton">Table</button>
+				<div id="timer" style="text-align:right">Time Remaining: </div>
+
+				<div class="leaderboard-container">
+
+					<!-- Table for All Teams -->
+					<div class="other-components-container" id="mainDisplay">
+						<h2>Competition</h2>
+						<canvas id="myChart" width="400" height="250"></canvas>
+						<table id="leaderboard-table" style="width:50%"></table>
+					</div>
+
+					<div class="other-components-container">
+						<!-- Top Team -->
+						<div class="other-components-container" id="topTeam"></div>
+
+						<!-- My selected Team -->
+						<div class="other-components-container" id="myTeam"></div>
+
+						<!-- Buttons to change view for the leaderboard -->
+						<div class="other-components-container" style="clear: left">
+							VIEW TYPE <br>
+							<button type="button" id="chartButton">Chart</button>
+							<button type="button" id="tableButton">Table</button>
+						</div>
+					</div>
 				</div>
+
+				<!-- Script for the chart -->
+				<script type="text/javascript">
+				var selectedTeam = "<?php
+				if (isset($_SESSION["selectedTeam"])){
+					echo $_SESSION["selectedTeam"];
+				}
+				?>";
+				setSelectedTeam(selectedTeam);
+				var activeCompetition = "<?php echo $activeCompetition?>";
+				setActiveCompetition(activeCompetition);
+				var startTime = "<?php echo $startTime ?>";
+				setStartTime(startTime);
+				</script>
+
 			</div>
 		</div>
 	</div>
-
-	<!-- Script for the chart -->
-	<script type="text/javascript">
-	var selectedTeam = "<?php
-	if (isset($_SESSION["selectedTeam"])){
-		echo $_SESSION["selectedTeam"];
-	}
-	?>";
-	setSelectedTeam(selectedTeam);
-	var activeCompetition = "<?php echo $activeCompetition?>";
-	setActiveCompetition(activeCompetition);
-	var startTime = "<?php echo $startTime ?>";
-	setStartTime(startTime);
-	</script>
 
 </body>
 </html>

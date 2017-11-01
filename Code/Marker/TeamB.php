@@ -21,13 +21,14 @@ $dbConn = openConnection();
 $team = array("","");
 $result = getMakerAssignedTeam($dbConn,$compId, $userName);
 
-if (($count= pg_num_rows($result)) >= 1) {
+if (($count= pg_num_rows($result)) >= 2) {
 
 		for ($x = 0; $x < $count; $x++) {
         $row = pg_fetch_row($result);
 				$team[$x] = $row[0];
 
     }
+
 }else{
     header("Location: NoTeamSelected.html");
 }
@@ -48,7 +49,7 @@ if($teamInfo != false) {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="CssFiles/marker.css">
+	<link rel="stylesheet" href="CssFiles/mainStyle.css">
   	<link rel="stylesheet" href="CssFiles/modal.css">
 	<script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="JsFiles/modal.js"></script>
@@ -78,13 +79,7 @@ if($teamInfo != false) {
 
 	<div class="mx-auto text-center" id="teamSelectedShow">
 
-    <div class="text-right my-2 mx-5" id="teamSelectedShow">
-      <!-- Trigger/Open The Modal -->
-      <button class = "btn btn historyBtn" id="myBtn">History</button>
-
-    </div>
-
-		<h2>TEAM: <?php if ($team[1] == ""){echo "No Team Selected";} else { echo  $team[1];} ?></h2>
+		<h2 class="my-5">TEAM: <?php if ($team[1] == ""){echo "No Team Selected";} else { echo  $team[1];} ?></h2>
 		<h3> Current Question: </h3>
 		<h3 id="currQuestionHeading"><?php echo $currquestion ?></h3>
 
@@ -97,19 +92,23 @@ if($teamInfo != false) {
 	      </div>
 	      <div class="col-4 ">
 	        <button class="btn btn-default" onclick="undo()">
-					<img class="img-responsive" src="../images/" class="img-rounded" alt="">Undo
+					<img class="img-responsive" src="../images/" class="img-rounded" alt="Undo">
 					</button>
 	      </div>
 	      <div class="col-4  ">
 					<button class="btn btn-default" onclick="pass()">
-	        <img class="img-responsive" src="../images/" class="img-rounded" alt=""> Pass
+	        <img class="img-responsive" src="../images/" class="img-rounded" alt="Pass">
 					</button>
 	      </div>
 
 			</div>
+
+      <div class="text-center my-2 mx-auto" id="teamSelectedShow">
+        <!-- Trigger/Open The Modal -->
+        <button class = "btn btn historyBtn" id="myBtn">History</button>
+
+      </div>
 	</div>
-
-
 </body>
 
 </html>

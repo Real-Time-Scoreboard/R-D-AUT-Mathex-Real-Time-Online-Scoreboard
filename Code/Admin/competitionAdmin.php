@@ -25,15 +25,49 @@
 	include '../DataBaseManagement/UpdateData.php';
 ?>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE  html5>
+<html lang="en">
 <head>
 	<title>Edit Competition</title>
 	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
-	<link rel="stylesheet" href="style/mainStyle.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../style/mainStyler.css">
+	<script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../style/menuSelector.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
+
+	<div class="container">
+		<div class="content_container">
+
+			<div class="header">
+				<h1>Edit Competition</h1>
+			</div>
+
+			<ul class="nav nav-fill bg-dark" id="my_menu ">
+				<li class="nav-item ">
+					<a class="nav-link " href="addCompetition.php">Competition</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="addTeam.php">Teams</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link "  href="href="addUser.php"">Users</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="logout.php">Logout</a>
+				</li>
+			</ul>
+
+			<div class="my-5">
+
+				
 	<h1>Edit Competition</h1>
 	<div class="content_container">
 
@@ -108,9 +142,7 @@
 							} else {
 								echo "That team is already in the competition!";
 							}
-						} else {
-							echo "That team does not exist!";
-						}
+
 					}
 					//checks if user wishes to delete a team
 					if (isset($_POST['teamInitialstodelete'])) {
@@ -153,17 +185,39 @@
 						$allTeams = array();
 						while ($row = pg_fetch_row($result)) {
 							array_push($allTeams, $row[0]);
+
 						}
-					}
+					?>
+				</table>
 
-					foreach($allTeams as $key => $value):
-						echo '<option value="'.$value.'">'.$value.'</option>';
-					endforeach;
-				?>
-			</datalist>
-			<button type="submit">Add Team</button>
-		</form>
+				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+					<h2>Search for the team you wish to add to this competition: </h2>
+					<input list="teams" name="selectedTeam">
+					<datalist id="teams">
+						<option value="">Select Team</option>
+						<?php
+							if (!$dbConn) {
+								echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+							} else {
+								$result = selectAllTeams($dbConn);
 
+								$allTeams = array();
+								while ($row = pg_fetch_row($result)) {
+									array_push($allTeams, $row[0]);
+								}
+							}
+
+							foreach($allTeams as $key => $value):
+								echo '<option value="'.$value.'">'.$value.'</option>';
+							endforeach;
+						?>
+					</datalist>
+					<button type="submit">Add Team</button>
+				</form>
+
+			</div>
+		</div>
 	</div>
+
 </body>
 </html>

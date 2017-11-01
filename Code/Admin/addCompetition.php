@@ -17,26 +17,48 @@
 	include '../DataBaseManagement/SelectData.php';
 ?>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE  html5>
+<html lang="en">
 <head>
 	<title>Competitions Overview</title>
 	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
-	<link rel="stylesheet" href="style/mainStyle.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../style/mainStyler.css">
+
+  <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../style/menuSelector.js"></script>
+  <script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
+  <script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
 
 </head>
 <body>
 
-	<h1>Competitions Overview</h1>
-	<div class="content_container">
 
-		<!-- Navigation bar -->
-		<ul class="navbar">
-			<li class="navbar"><a href="addCompetition.php" class="current">Competition</a></li>
-			<li class="navbar"><a href="addTeam.php">Teams</a></li>
-			<li class="navbar"><a href="addUser.php">Users</a></li>
-			<li class="navbar"><a href="logout.php">Logout</a></li>
-		</ul>
+	<div class="container">
+    <div class="content_container">
+
+      <div class="header">
+        <h1>Competitions Overview</h1>
+      </div>
+
+      <ul class="nav nav-fill bg-dark" id="my_menu ">
+        <li class="nav-item current">
+        	<a class="nav-link " href="addCompetition.php">Competition</a>
+      	</li>
+      	<li class="nav-item">
+        	<a class="nav-link" href="addTeam.php">Teams</a>
+      	</li>
+      	<li class="nav-item ">
+        	<a class="nav-link "  href="href="addUser.php"">Users</a>
+      	</li>
+      	<li class="nav-item">
+        	<a class="nav-link" href="logout.php">Logout</a>
+      	</li>
+    	</ul>
+
+			<div class="my-5">
 		
 		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
@@ -67,7 +89,6 @@
 				}
 			}
 		?>
-
 		<br>
 		<h2>Existing Competitions:</h2>
 		<!-- List of Competitions -->
@@ -93,14 +114,13 @@
 							echo "Yes";
 						} else {
 							echo "No";
-						}
-						echo "</td>";
-						echo "</tr>";
-					}
-				}
-			?>
-		</table>
 
+						}
+					}
+				?>				
+				</table>
+			
+  	</div>
 	</div>
 </body>
 

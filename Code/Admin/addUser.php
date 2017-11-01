@@ -21,26 +21,47 @@
 	include '../DataBaseManagement/UpdateData.php';
 ?>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE  html5>
+<html lang="en">
 <head>
 	<title>Users Overview</title>
 	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
-	<link rel="stylesheet" href="style/mainStyle.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../style/mainStyler.css">
+
+	<script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../style/menuSelector.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-	<h1>Users Overview</h1>
-	<div class="content_container">
 
-		<!-- Navigation bar -->
-		<ul class="navbar">
-			<li class="navbar"><a href="addCompetition.php">Competition</a></li>
-			<li class="navbar"><a href="addTeam.php">Teams</a></li>
-			<li class="navbar"><a href="addUser.php" class="current">Users</a></li>
-			<li class="navbar"><a href="logout.php">Logout</a></li>
-		</ul>
-		
+	<div class="container">
+    <div class="content_container">
+
+      <div class="header">
+        <h1>Teams Overview</h1>
+      </div>
+
+      <ul class="nav nav-fill bg-dark" id="my_menu ">
+        <li class="nav-item ">
+        	<a class="nav-link " href="addCompetition.php">Competition</a>
+      	</li>
+      	<li class="nav-item ">
+        	<a class="nav-link" href="addTeam.php">Teams</a>
+      	</li>
+      	<li class="nav-item current">
+        	<a class="nav-link "  href="href="addUser.php"">Users</a>
+      	</li>
+      	<li class="nav-item">
+        	<a class="nav-link" href="logout.php">Logout</a>
+      	</li>
+    	</ul>
+
+			<div class="my-5">
 		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
 
@@ -127,14 +148,58 @@
 												<input type="hidden" name="fullnametodelete" value="', $row[1], '">
 												<button type="submit" id="delete" onclick="return confirm(\'Are you sure you wish to delete this team?\');">Delete</button>
 												</form></td>';
+
 						} else {
-							echo "<td>Logged In</td>";
+							$result = deleteUser($dbConn, $_POST['usernametodelete'], $_POST['fullnametodelete']);
+							if (isset($result)) {
+								echo "User " . $_POST['usernametodelete'] . " has been successfully deleted!";
+							}
 						}
-						echo "</tr>";
 					}
-				}
-			?>
-		</table>
+				?>
+
+				<br>
+				<h2>Existing Users:</h2>
+				<!-- List of Users -->
+				<table style="width:90%">
+					<tr>
+						<th>User ID</th>
+						<th>Full name</th>
+						<th>Password</th>
+						<th>Privilege</th>
+						<th>Delete</th>
+					</tr>
+					<?php
+
+						$dbConn = openConnection();
+						if (!$dbConn) {
+							echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+						} else {
+							$result = selectAllUsers($dbConn);
+
+							while ($row = pg_fetch_array($result)) {
+								echo "<tr>";
+								echo "<td>" . $row[0] . "</td>";
+								echo "<td>" . $row[1] . "</td>";
+								echo "<td>" . $row[2] . "</td>";
+								echo "<td>" . $row[3] . "</td>";
+								if ($row[1] != $_SESSION['fullname']) {
+									echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
+														<input type="hidden" name="usernametodelete" value="', $row[0], '">
+														<input type="hidden" name="fullnametodelete" value="', $row[1], '">
+														<button type="submit" id="delete" onclick="return confirm(\'Are you sure you wish to delete this team?\');">Delete</button>
+														</form></td>';
+								} else {
+									echo "<td>Logged In</td>";
+								}
+								echo "</tr>";
+							}
+						}
+					?>
+				</table>
+
+			</div>
+  	</div>
 	</div>
 </body>
 </html>
