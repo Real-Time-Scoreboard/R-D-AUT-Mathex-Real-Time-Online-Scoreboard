@@ -25,7 +25,7 @@ if (isSet($_SESSION['userName']) && isSet($_SESSION['fullName'])){
   $fullName =  $_SESSION['fullName'];
   $userName = $_SESSION['userName'];
 } else {
-    header("Location: invalidLogin.html");
+  header("Location: invalidLogin.html");
 }
 
 include '../DataBaseManagement/ConnectionManager.php';
@@ -63,7 +63,7 @@ closeConn($dbConn);
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
   <link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="CssFiles/mainStyle.css">
+  <link rel="stylesheet" href="../style/mainStyler.css">
   <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="JsFiles/marker.js"></script>
   <script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
@@ -76,34 +76,31 @@ closeConn($dbConn);
   <input type="hidden" id="hiddenCompId" value=<?php echo $compId ?> />
 
   <div class="container">
-
+    <div class="header">
+      <h1>Marker Page</h1>
+    </div>
     <div class="content_container">
+      <ul class="nav nav-fill bg-dark" id="my_menu ">
+        <li class="nav-item current">
+          <a class="nav-link " onclick="loadPage('homePage.php')">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="loadPage('selectTeamPage.php')">Select Team</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link " id="navButTeamA" onclick="loadPage('TeamA.php')">Team A</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="navButTeamB" onclick="loadPage('TeamB.php')">Team B</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Spectator/logout.php">Log Out</a>
+        </li>
+      </ul>
 
-        <div class="header">
-          <h1>Marker Page</h1>
-        </div>
+      <div  id="displayBody" class=""></div>
 
-        <ul class="nav nav-fill bg-dark" id="my_menu ">
-          <li class="nav-item current">
-        <a class="nav-link " onclick="loadPage('homePage.php')">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" onclick="loadPage('selectTeamPage.php')">Select Team</a>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link " id="navButTeamA" onclick="loadPage('TeamA.php')">Team A</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="navButTeamB" onclick="loadPage('TeamB.php')">Team B</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../Spectator/logout.php">Log Out</a>
-      </li>
-    </ul>
-
-    <div  id="displayBody" class=""></div>
-
-  </div>
+    </div>
   </div>
 </body>
 
