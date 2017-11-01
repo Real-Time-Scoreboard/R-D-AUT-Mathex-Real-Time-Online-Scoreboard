@@ -25,7 +25,7 @@ if (isSet($_SESSION['userName']) && isSet($_SESSION['fullName'])){
   $fullName =  $_SESSION['fullName'];
   $userName = $_SESSION['userName'];
 } else {
-  header("Location: invalidLogin.html");
+  header("Location: ../Spectator/invalidLogin.html");
 }
 
 include '../DataBaseManagement/ConnectionManager.php';
