@@ -1,3 +1,10 @@
+<!--
+This file is a login page for privileged users.
+It lets them enter login credentials, checks the database if those credentials
+are correct, and then redirects them to the appropriate page if the login is
+successful.
+-->
+
 <?php
    session_start();
 	 include '../DataBaseManagement/ConnectionManager.php';
@@ -44,21 +51,31 @@
 
       <?php
   			$msg = '';
+        // If the form is completed properly, proceed.
   			if (isset($_POST['login']) && !empty($_POST['userName'])
   			&& !empty($_POST['password'])) {
-  				$dbConn = openConnection();
+          // Create a connection with the database.
+          $dbConn = openConnection();
+          // If the database isn't successful, echo an error.
+          // Else, proceed.
   			  if (!$dbConn) {
   		      echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
   			  } else {
+            // Query the database for a user with the provided credentials.
   		      $row = selectPrivilegedUser($dbConn, $_POST['userName'], $_POST['password']);
   					$privilege = $row[0];
   					$fullname = $row[1];
+            // If the privilege of the result of the query is Admin or Marker,
+            // store the login credentials in the session.
+            // Else, echo an error.
   					if ($privilege == 'Marker' || $privilege == 'Admin' || $privilege == 'marker' || $privilege == 'admin'){
   						echo $fullname . ": Marker";
   						$_SESSION['valid'] = true;
   						$_SESSION['privilege'] = $privilege;
   						$_SESSION['fullName'] = $fullname;
               $_SESSION['userName'] = $_POST["userName"];
+              // If the user is a Marker, redirect to Marker pages.
+              // Otherwise, if user is an Admin, redirect to admin pages.
   						if ($privilege == 'Marker' || $privilege == 'marker'){
   							header("Location: ../Marker/MarkerMain.php");
   							exit();

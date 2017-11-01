@@ -1,13 +1,24 @@
+<!--
+This page allows spectators to select a team to track.
+It retrieves a list of teams from the active competition and displays them.
+Once a user selects a team, it is stored in the session and the user is
+navigated to the leaderboard.php page.
+-->
+
 <?php
 include '../DataBaseManagement/ConnectionManager.php';
 include '../DataBaseManagement/SelectData.php';
 session_start();
 $dbConn = openConnection();
+// Create connection with database
 $activeCompetition = selectCurrentComp($dbConn);
+// If there is no active competition, redirect to welcome.html
 if (!$activeCompetition){
 	header("Location: welcome.html");
 }
+// Get all teams participating in the active competition
 $result = selectAllActiveTeams($dbConn, $activeCompetition);
+// Store those teams in an array.
 $teamNames = array();
 while ($row = pg_fetch_row($result)) {
 	array_push($teamNames, $row[0]);
@@ -70,6 +81,8 @@ while ($row = pg_fetch_row($result)) {
 						<select id="teams" name="selectedTeam">
 							<option value="" disabled selected>Select Team</option>
 							<?php
+							// Iterate through the array of teams.
+							// For each team, echo a <option> html tag.
 							for($i = 0; $i < count($teamNames); $i++){
 								echo '<option value="'.$teamNames[$i].'">'.$teamNames[$i].'</option>';
 							}
@@ -80,10 +93,14 @@ while ($row = pg_fetch_row($result)) {
 
 					<p>
 						<?php
+						// If the selected team is set when the form was submitted,
+						// store the team in the session and redirect to leaderboard.php.
 						if (isset($_GET['selectedTeam'])) {
 							$_SESSION['selectedTeam'] = $_GET['selectedTeam'];
 							header("Location: leaderboard.php");
 						}
+						// If the session already stores a team, display the team's name.
+						// Otherwise display a default message.
 						if (isset($_SESSION['selectedTeam'])) {
 							echo "You are tracking " . $_SESSION['selectedTeam'] . "<br>";
 						} else {
