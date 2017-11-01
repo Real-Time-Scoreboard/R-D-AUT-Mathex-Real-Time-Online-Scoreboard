@@ -1,3 +1,13 @@
+<!-- 
+	PHP file used to display a list of users in the database
+	and present a form to the user which allows them to add a new 
+	user or delete an existing one.
+-->
+
+<!-- 
+	PHP to check if user is actually logged into the page with correct privileges. 
+	Redirects them if they are not.
+-->
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
@@ -30,7 +40,8 @@
 			<li class="navbar"><a href="addUser.php" class="current">Users</a></li>
 			<li class="navbar"><a href="logout.php">Logout</a></li>
 		</ul>
-
+		
+		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
 
 		<!-- Form to add a user -->
@@ -49,14 +60,16 @@
 			</select>
 			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this user?')">Add</button>
 		</form>
-
+		
+		<!-- PHP code to add or delete a user-->
 		<?php
+			//checks if user wants to add a new user to the database
 			if (isset($_POST['username']) && isset($_POST['fullname']) && isset($_POST['password']) && isset($_POST['privilege'])) {
 				$dbConn = openConnection();
-			  if (!$dbConn) {
-		      echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-			  } else {
-
+			  	if (!$dbConn) {
+		      			echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+			  	} else {
+					//checks if tbhe new user doesn't already exist in the database
 					$row = selectUser($dbConn, $_POST['username'], $_POST['fullname'], $_POST['password'], $_POST['privilege']);
 
 					if (!$row[0]) {
@@ -67,6 +80,7 @@
 					}
 				}
 			}
+			//checks if user wants to delete an existing user from the database
 			if (isset($_POST['usernametodelete']) && isset($_POST['fullnametodelete'])) {
 				$dbConn = openConnection();
 				if (!$dbConn) {
@@ -91,8 +105,8 @@
 				<th>Privilege</th>
 				<th>Delete</th>
 			</tr>
+			<!--Code which creates a table entry for each user entry in the database-->
 			<?php
-
 				$dbConn = openConnection();
 				if (!$dbConn) {
 					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
@@ -105,6 +119,8 @@
 						echo "<td>" . $row[1] . "</td>";
 						echo "<td>" . $row[2] . "</td>";
 						echo "<td>" . $row[3] . "</td>";
+						//checks each user to see if they are the user currently logged in or not
+						//to prevent user from accidentally deleting themselves
 						if ($row[1] != $_SESSION['fullname']) {
 							echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
 												<input type="hidden" name="usernametodelete" value="', $row[0], '">
