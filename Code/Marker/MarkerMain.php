@@ -2,16 +2,14 @@
 // Start the session
 session_start();
 
-$fullName =  "Full Name";
-$userName = "Marker01";
+$fullName = "";
+$userName = "";
 
 if (isSet($_SESSION['userName']) && isSet($_SESSION['fullName'])){
   $fullName =  $_SESSION['fullName'];
   $userName = $_SESSION['userName'];
 } else {
-    //header("Location: invalidLogin.html");
-    $_SESSION['fullName'] = $fullName;
-    $_SESSION['userName'] = $userName;
+    header("Location: invalidLogin.html");
 }
 
 include '../DataBaseManagement/ConnectionManager.php';

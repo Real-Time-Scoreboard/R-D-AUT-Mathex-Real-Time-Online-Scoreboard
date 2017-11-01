@@ -47,14 +47,13 @@ include 'UpdateData.php'
   insertNewTeamRecord($dbConn, "COMP01", "AU");
   insertNewTeamRecord($dbConn, "COMP01", "SCO");
 
-  insertFullNewTeamRecord($dbConn, "COMP02", "TRE", 1, 1, 1, 1, 1);
-  insertFullNewTeamRecord($dbConn, "COMP02", "TEST", 1, 1, 1, 1, 1);
-  insertFullNewTeamRecord($dbConn, "COMP02", "NOS", 1, 1, 1, 1, 1);
 
-  insertNewUser($dbConn, "Marker01", "Mathex", "maker01", "marker");
-  insertNewUser($dbConn, "Marker02", "Mathex", "maker02", "marker");
-  insertNewUser($dbConn, "Marker03", "Mathex", "maker03", "marker");
-  insertNewUser($dbConn, "Marker04", "Mathex", "maker04", "marker");
+  insertNewUser($dbConn, "Marker01", "Mathex", "password", "Marker");
+  insertNewUser($dbConn, "Marker02", "Mathex", "password", "Marker");
+  insertNewUser($dbConn, "Marker03", "Mathex", "password", "Marker");
+  insertNewUser($dbConn, "Marker04", "Mathex", "password", "Marker");
+
+  insertNewUser($dbConn, "Admin", "Admin", "password", "Admin");
 
   updateCompetitionEntry($dbConn, "COMP01", date('H:i:s'), 1);
   updateCompetitionEntry($dbConn, "COMP02", date('H:i:s'), 0);

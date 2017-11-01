@@ -24,8 +24,9 @@ function hideButtons() {
 }
 //the php file path starts from the location of Marker.html file and not this js file
 function requestDropBoxContentUsingJQuery() {
+  var hiddenCompId = $("#hiddenCompId").val();
   $.post("PhpFiles/markerManager.php", {
-
+    compId: hiddenCompId,
     request: "DropBoxContent"
 
   }, function(data, status) {

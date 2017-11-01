@@ -15,12 +15,12 @@ $msg -> result = true;
 if(isset($_POST['request'])){
 
   $request = $_POST['request'];
+  $compId = $_POST['compId'];
 
   if( $request !== "DropBoxContent"){
 
     $currentQuestion = $_POST['currentQuestion'];
-    $userName = $_POST['userName'];
-    $compId = $_POST['compId'];
+    $userName = $_POST['userName'];    
     $initials = $_POST['teamInitials'];
 
     $result = selectTeamRecord($dbConn,$compId, $initials);
@@ -38,7 +38,7 @@ if(isset($_POST['request'])){
   switch ($request) {
       case "DropBoxContent":
 
-      $result = selectTeamInitials($dbConn);
+      $result = selectAllActiveTeams($dbConn,$compId);
          $string = "";
 
          if (($count= pg_num_rows($result)) >= 1) {
