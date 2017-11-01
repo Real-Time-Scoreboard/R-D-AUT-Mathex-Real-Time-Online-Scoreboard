@@ -1,3 +1,13 @@
+<!-- 
+	PHP file which contains functionality for admin to manage a competition.
+	Can add/remove teams as well as start or delete the competition.
+-->
+
+<!-- 
+	PHP to check if user is actually logged into the page with correct privileges. 
+	Redirects them if they are not.
+-->
+
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
@@ -5,6 +15,7 @@
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullname'];
 		if (isset($_GET['id'])) {
+			//gets the current competition id and saves to session variable
 			$_SESSION['selectedCompetition'] = $_GET['id'];
 		}
 	}
@@ -33,18 +44,22 @@
 			<li class="navbar"><a href="addUser.php">Users</a></li>
 			<li class="navbar"><a href="logout.php">Logout</a></li>
 		</ul>
-
+		
+		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
-
+		
+		<!-- PHP code to display the current status of the competition as well as start one-->
 		<h2>Competition <?php echo $_SESSION['selectedCompetition'] ?> Status:
 			<?php
 				$dbConn = openConnection();
-
+				
+				//starts competition using the computer's current time
 				if (isset($_POST['start'])) {
 					$time = date("h:i:s");
 					updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'],  $time, true);
 				}
-
+				
+				//checks if competition is active or inactive
 				$result = getCompetitionStatus($dbConn, $_SESSION['selectedCompetition']);
 				if ($result) {
 					echo "ACTIVE";
@@ -54,12 +69,13 @@
 			?>
 		</h2>
 
-		<!-- Start competition or remove it from the system-->
+		<!-- Form to start competition-->
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<input type="hidden" name="start" value="placeholder">
 			<button id="start" onclick="confirm('Are you sure you wish to start this competition?')">Start Competition</button>
 		</form>
-
+		
+		<!-- Form to delete competition-->
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<input type="hidden" name="delete" value="placeholder">
 			<button id="remove" onclick="confirm('Are you sure you wish to delete this competition?')">Delete Competition</button>
@@ -74,13 +90,17 @@
 				<th>Team Initials</th>
 				<th>Remove</th>
 			</tr>
+			<!--PHP to add/delete a team or delete the competition-->
 			<?php
 				if (!$dbConn) {
 					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
 				} else {
+					//checks if user wishes to add a new team
 					if (isset($_POST['selectedTeam'])) {
+						//checks that team exists 
 						$row = selectTeam($dbConn, $_POST['selectedTeam'], "DUMMY");
 						if (isset($row[0])) {
+							//checks that team is not already added to the current competition
 							$row = selectTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
 							if (!$row) {
 								insertNewTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
@@ -92,17 +112,17 @@
 							echo "That team does not exist!";
 						}
 					}
-
+					//checks if user wishes to delete a team
 					if (isset($_POST['teamInitialstodelete'])) {
 						deleteTeamRecord($dbConn, $_POST['teamInitialstodelete'], $_SESSION['selectedCompetition']);
 						echo "Team " . $_POST['teamInitialstodelete'] . " has been sucessfully removed!";
 					}
-
+					//checks if user wishes to delete the current competition
 					if (isset($_POST['delete'])) {
 						deleteCompetition($dbConn, $_SESSION['selectedCompetition']);
 						header("Location: addCompetition.php");
 					}
-
+					//gets all teams in the current competition and creates a table entry for each team
 					$result = selectAllActiveTeams($dbConn, $_SESSION['selectedCompetition']);
 
 					while ($row = pg_fetch_array($result)) {
@@ -117,7 +137,8 @@
 				}
 			?>
 		</table>
-
+		
+		<!-- Form to search for a team and add it to competition-->
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<h2>Search for the team you wish to add to this competition: </h2>
 			<input list="teams" name="selectedTeam">
