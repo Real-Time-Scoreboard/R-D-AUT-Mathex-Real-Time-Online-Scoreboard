@@ -1,3 +1,10 @@
+
+<!-- 
+	PHP file used to display a list of teams in the database
+	and present a form to the user which allows them to add or delete
+	a new team to the database.
+-->
+
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
@@ -30,7 +37,8 @@
 			<li class="navbar"><a href="addUser.php">Users</a></li>
 			<li class="navbar"><a href="logout.php">Logout</a></li>
 		</ul>
-
+		
+		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
 
 		<!-- Form to add a team -->
@@ -46,16 +54,17 @@
 			<br>
 			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this team?')">Add</button>
 		</form>
-
+		
+		<!-- PHP code to add a new team to the database or delete one. -->
 		<?php
+			//checks if user wants to add a team to the database
 			if (isset($_POST['teamInitials']) && isset($_POST['teamName'])) {
 				$dbConn = openConnection();
-			  if (!$dbConn) {
-		      echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-			  } else {
-
+				if (!$dbConn) {
+		      			echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+			 	} else {
+					//checks if the new team doesn't already exist in the database
 					$row = selectTeam($dbConn, strtoupper($_POST['teamInitials']), strtoupper($_POST['teamName']));
-
 					if (!$row[0]) {
 						insertIntoTeam($dbConn, $_POST['teamInitials'], $_POST['teamName']);
 						echo $msg = $_POST['teamName'] . " has been successfully created!";
@@ -64,6 +73,7 @@
 					}
 				}
 			}
+			//checks if user wishes to delete a team from the database
 			if (isset($_POST['teamnametodelete']) && isset($_POST['teaminitialstodelete'])) {
 				$dbConn = openConnection();
 				if (!$dbConn) {
@@ -86,12 +96,13 @@
 				<th>Team Initials</th>
 				<th>Delete</th>
 			</tr>
+			<!--Code which creates a table entry for each team entry in the database-->
 			<?php
 
 				$dbConn = openConnection();
 				if (!$dbConn) {
 					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-				} else {
+				} else
 					$result = selectAllTeams($dbConn);
 
 					while ($row = pg_fetch_array($result)) {
