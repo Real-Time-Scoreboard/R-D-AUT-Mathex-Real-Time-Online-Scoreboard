@@ -1,6 +1,10 @@
 
 <?php
 
+/** Handles the request from marker.js. Checque what the request is and then perform the corrrect updates on the database.
+* It return the appropriate message to the client using jason encoding
+**/
+
 include '../../DataBaseManagement/ConnectionManager.php';
 include '../../DataBaseManagement/SelectData.php';
 include '../../DataBaseManagement/UpdateData.php';
@@ -9,21 +13,23 @@ include '../../DataBaseManagement/UpdateData.php';
 
 $dbConn = openConnection();
 
+//Array to be encoded
 $msg = (object) [];
 $msg -> result = true;
 
-if(isset($_POST['request'])){
+if(isset($_POST['request'])){// confirn request exists
 
   $request = $_POST['request'];
-  $compId = $_POST['compId'];
+  $compId = $_POST['compId'];// this varaible is used for any request
 
   if( $request !== "DropBoxContent"){
 
+    //Initiate all these variables if the request is not simply get the teams from the db (DropBoxContent)
     $currentQuestion = $_POST['currentQuestion'];
-    $userName = $_POST['userName'];    
+    $userName = $_POST['userName'];
     $initials = $_POST['teamInitials'];
 
-    $result = selectTeamRecord($dbConn,$compId, $initials);
+    $result = selectTeamRecord($dbConn,$compId, $initials); // get the team to be updated. this is important to be able to update the information correctly
 
     if($result !== false) {
     	$TeamRecord = pg_fetch_assoc($result);

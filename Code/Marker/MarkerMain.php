@@ -1,3 +1,19 @@
+
+<!--
+MarkerMain.php is the main page and all other pages are loaded into this page as subpages. See method loadPage().
+The nav bar is presented in this page only and its main purpose is to provide the naviation role.
+
+homePage.php - Simply provides the greeting to the marker
+
+SelectTeamPage.php  - has the goal to Select the team to be marked , as well as, inform the ones already assigned to marker
+
+Team(A|B).php - provides the features to update team's perfomance as the competition goes. this is the Team's page
+
+NotteamSelected.html - will call for a warning message, informing that Marker chas to select a team before loading the team page
+
+Note: that most of the variables (Sessions) are checked and set on this page and they are used by other marker's pages. They are stores into html hidden fields.
+-->
+
 <?php
 // Start the session
 session_start();
@@ -18,19 +34,23 @@ include '../DataBaseManagement/SelectData.php';
 
 $dbConn = openConnection();
 
-$compId = selectCurrentComp($dbConn);
+$compId = selectCurrentComp($dbConn); // check what is the current Comptetition
 $_SESSION['compId'] = $compId;
 
+
 $team = array("","");
-$result = getMakerAssignedTeam($dbConn,$compId, $userName);
+$result = getMakerAssignedTeam($dbConn,$compId, $userName); //Get marker assined te
+$count= pg_num_rows($result);
 
-if (($count= pg_num_rows($result)) >= 1) {
-
-		for ($x = 0; $x < $count; $x++) {
-        $row = pg_fetch_row($result);
-				$team[$x] = $row[0];
-
-    }
+if ($count >= 1) {
+  $row = pg_fetch_row($result);
+  $team[0] = $row[0];
+  $_SESSION['teamA'] = $team[0];
+  if($count == 2){
+    $row = pg_fetch_row($result);
+    $team[1] = $row[0];
+    $_SESSION['teamB'] = $team[1];
+  }
 }
 
 closeConn($dbConn);

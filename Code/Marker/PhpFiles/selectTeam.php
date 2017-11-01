@@ -1,6 +1,12 @@
-
 <?php
-
+/**
+*Handles only action from the select menu option from markers page.
+*it either select and assign it to the marker or deselect it.
+*Also do checks to ensure:
+*- if marker has not more than 2 teans assigned to them
+*- if a selected team is not already selected
+*- if a team is not assigned already
+**/
 
 include '../../DataBaseManagement/ConnectionManager.php';
 include '../../DataBaseManagement/SelectData.php';
