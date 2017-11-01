@@ -97,7 +97,7 @@ closeConn($dbConn);
         <a class="nav-link" id="navButTeamB" onclick="loadPage('TeamB.php')">Team B</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../Prototype HTML and CSS/Welcome.html">Log Out</a>
+        <a class="nav-link" href="../Spectator/logout.php">Log Out</a>
       </li>
     </ul>
 
