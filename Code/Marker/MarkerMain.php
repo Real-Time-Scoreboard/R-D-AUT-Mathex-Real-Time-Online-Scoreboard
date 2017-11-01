@@ -45,7 +45,7 @@ closeConn($dbConn);
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="CssFiles/marker.css">
+  <link rel="stylesheet" href="CssFiles/mainStyle.css">
   <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="JsFiles/marker.js"></script>
   <script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
@@ -54,21 +54,20 @@ closeConn($dbConn);
 </head>
 
 <body onload="loadPage('homePage.php')">
+  <input type="hidden" id="hiddenUserName" value=<?php echo $userName ?> />
+  <input type="hidden" id="hiddenCompId" value=<?php echo $compId ?> />
+
   <div class="container">
-    <div class="header">
-      <h1>Marker Page</h1>
-    </div>
 
-  </div>
+    <div class="content_container">
 
-  <div class="container pageBorder">
+        <div class="header">
+          <h1>Marker Page</h1>
+        </div>
 
-    <input type="hidden" id="hiddenUserName" value=<?php echo $userName ?> />
-  	<input type="hidden" id="hiddenCompId" value=<?php echo $compId ?> />
-
-    <ul class="nav nav-fill" id="my_menu">
-      <li class="nav-item">
-        <a class="nav-link" onclick="loadPage('homePage.php')">Home</a>
+        <ul class="nav nav-fill bg-dark" id="my_menu ">
+          <li class="nav-item current">
+        <a class="nav-link " onclick="loadPage('homePage.php')">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" onclick="loadPage('selectTeamPage.php')">Select Team</a>
@@ -83,8 +82,10 @@ closeConn($dbConn);
         <a class="nav-link" href="../Prototype HTML and CSS/Welcome.html">Log Out</a>
       </li>
     </ul>
-    <div id="displayBody" ></div>
 
+    <div  id="displayBody" class=""></div>
+
+  </div>
   </div>
 </body>
 

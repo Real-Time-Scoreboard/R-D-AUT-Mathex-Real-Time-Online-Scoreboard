@@ -10,7 +10,7 @@ $(document).ready(function() {
 function hideButtons() {
   var teamA = $("#teamA").text();
   var teamB = $("#teamB").text();
-  
+
   if (teamA === "") {
     $("#unselectTeamA").hide();
   }else{
@@ -30,7 +30,8 @@ function requestDropBoxContentUsingJQuery() {
 
   }, function(data, status) {
     if (status == "success") {
-      setDropBox("selectTeam", data.split(","));
+      var obj = jQuery.parseJSON(data);
+      setDropBox("selectTeam", obj.result.split(","));
     }
   });
 }

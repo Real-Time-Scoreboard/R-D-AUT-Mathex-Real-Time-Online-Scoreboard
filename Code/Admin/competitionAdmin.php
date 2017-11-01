@@ -14,135 +14,159 @@
 	include '../DataBaseManagement/UpdateData.php';
 ?>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE  html5>
+<html lang="en">
 <head>
 	<title>Edit Competition</title>
 	<meta http-equiv="content-type" content="text/html>"; charset="utf-8" />
-	<link rel="stylesheet" href="style/mainStyle.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../style/mainStyler.css">
+	<script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../style/menuSelector.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
-	<h1>Edit Competition</h1>
-	<div class="content_container">
+	<div class="container">
+		<div class="content_container">
 
-		<!-- Navigation bar -->
-		<ul class="navbar">
-			<li class="navbar"><a href="addCompetition.php" class="current">Competition</a></li>
-			<li class="navbar"><a href="addTeam.php">Teams</a></li>
-			<li class="navbar"><a href="addUser.php">Users</a></li>
-			<li class="navbar"><a href="logout.php">Logout</a></li>
-		</ul>
+			<div class="header">
+				<h1>Edit Competition</h1>
+			</div>
 
-		<?php echo $msg; ?>
+			<ul class="nav nav-fill bg-dark" id="my_menu ">
+				<li class="nav-item ">
+					<a class="nav-link " href="addCompetition.php">Competition</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="addTeam.php">Teams</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link "  href="href="addUser.php"">Users</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="logout.php">Logout</a>
+				</li>
+			</ul>
 
-		<h2>Competition <?php echo $_SESSION['selectedCompetition'] ?> Status:
-			<?php
-				$dbConn = openConnection();
+			<div class="my-5">
 
-				if (isset($_POST['start'])) {
-					$time = date("h:i:s");
-					updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'],  $time, true);
-				}
+				<?php echo $msg; ?>
 
-				$result = getCompetitionStatus($dbConn, $_SESSION['selectedCompetition']);
-				if ($result) {
-					echo "ACTIVE";
-				} else {
-					echo "INACTIVE";
-				}
-			?>
-		</h2>
+				<h2>Competition <?php echo $_SESSION['selectedCompetition'] ?> Status:
+					<?php
+						$dbConn = openConnection();
 
-		<!-- Start competition or remove it from the system-->
-		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-			<input type="hidden" name="start" value="placeholder">
-			<button id="start" onclick="confirm('Are you sure you wish to start this competition?')">Start Competition</button>
-		</form>
+						if (isset($_POST['start'])) {
+							$time = date("h:i:s");
+							updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'],  $time, true);
+						}
 
-		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-			<input type="hidden" name="delete" value="placeholder">
-			<button id="remove" onclick="confirm('Are you sure you wish to delete this competition?')">Delete Competition</button>
-		</form>
-
-		<br>
-		<h2>Current Teams: </h2>
-		<!-- List of Teams in the selected competition -->
-		<table style="width:80%">
-			<tr>
-				<th>Team Name</th>
-				<th>Team Initials</th>
-				<th>Remove</th>
-			</tr>
-			<?php
-				if (!$dbConn) {
-					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-				} else {
-					if (isset($_POST['selectedTeam'])) {
-						$row = selectTeam($dbConn, $_POST['selectedTeam'], "DUMMY");
-						if (isset($row[0])) {
-							$row = selectTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
-							if (!$row) {
-								insertNewTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
-								echo "Team " . $_POST['selectedTeam'] . " has been sucessfully added to the competition!";
-							} else {
-								echo "That team is already in the competition!";
-							}
+						$result = getCompetitionStatus($dbConn, $_SESSION['selectedCompetition']);
+						if ($result) {
+							echo "ACTIVE";
 						} else {
-							echo "That team does not exist!";
+							echo "INACTIVE";
 						}
-					}
+					?>
+				</h2>
 
-					if (isset($_POST['teamInitialstodelete'])) {
-						deleteTeamRecord($dbConn, $_POST['teamInitialstodelete'], $_SESSION['selectedCompetition']);
-						echo "Team " . $_POST['teamInitialstodelete'] . " has been sucessfully removed!";
-					}
+				<!-- Start competition or remove it from the system-->
+				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+					<input type="hidden" name="start" value="placeholder">
+					<button id="start" onclick="confirm('Are you sure you wish to start this competition?')">Start Competition</button>
+				</form>
 
-					if (isset($_POST['delete'])) {
-						deleteCompetition($dbConn, $_SESSION['selectedCompetition']);
-						header("Location: addCompetition.php");
-					}
+				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+					<input type="hidden" name="delete" value="placeholder">
+					<button id="remove" onclick="confirm('Are you sure you wish to delete this competition?')">Delete Competition</button>
+				</form>
 
-					$result = selectAllActiveTeams($dbConn, $_SESSION['selectedCompetition']);
+				<br>
+				<h2>Current Teams: </h2>
+				<!-- List of Teams in the selected competition -->
+				<table style="width:80%">
+					<tr>
+						<th>Team Name</th>
+						<th>Team Initials</th>
+						<th>Remove</th>
+					</tr>
+					<?php
+						if (!$dbConn) {
+							echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+						} else {
+							if (isset($_POST['selectedTeam'])) {
+								$row = selectTeam($dbConn, $_POST['selectedTeam'], "DUMMY");
+								if (isset($row[0])) {
+									$row = selectTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
+									if (!$row) {
+										insertNewTeamRecord($dbConn, $_SESSION['selectedCompetition'], $_POST['selectedTeam']);
+										echo "Team " . $_POST['selectedTeam'] . " has been sucessfully added to the competition!";
+									} else {
+										echo "That team is already in the competition!";
+									}
+								} else {
+									echo "That team does not exist!";
+								}
+							}
 
-					while ($row = pg_fetch_array($result)) {
-						echo "<tr>";
-						echo "<td>" . $row[1] . "</td>";
-						echo "<td>" . $row[0] . "</td>";
-						echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
-											<input type="hidden" name="teamInitialstodelete" value="', $row[0], '">
-											<button type="submit" id="delete" onclick="return confirm(\'Are you sure you wish to remove this team?\');">Remove</button>
-											</form></td>';
-					}
-				}
-			?>
-		</table>
+							if (isset($_POST['teamInitialstodelete'])) {
+								deleteTeamRecord($dbConn, $_POST['teamInitialstodelete'], $_SESSION['selectedCompetition']);
+								echo "Team " . $_POST['teamInitialstodelete'] . " has been sucessfully removed!";
+							}
 
-		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-			<h2>Search for the team you wish to add to this competition: </h2>
-			<input list="teams" name="selectedTeam">
-			<datalist id="teams">
-				<option value="">Select Team</option>
-				<?php
-					if (!$dbConn) {
-						echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-					} else {
-						$result = selectAllTeams($dbConn);
+							if (isset($_POST['delete'])) {
+								deleteCompetition($dbConn, $_SESSION['selectedCompetition']);
+								header("Location: addCompetition.php");
+							}
 
-						$allTeams = array();
-						while ($row = pg_fetch_row($result)) {
-							array_push($allTeams, $row[0]);
+							$result = selectAllActiveTeams($dbConn, $_SESSION['selectedCompetition']);
+
+							while ($row = pg_fetch_array($result)) {
+								echo "<tr>";
+								echo "<td>" . $row[1] . "</td>";
+								echo "<td>" . $row[0] . "</td>";
+								echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
+													<input type="hidden" name="teamInitialstodelete" value="', $row[0], '">
+													<button type="submit" id="delete" onclick="return confirm(\'Are you sure you wish to remove this team?\');">Remove</button>
+													</form></td>';
+							}
 						}
-					}
+					?>
+				</table>
 
-					foreach($allTeams as $key => $value):
-						echo '<option value="'.$value.'">'.$value.'</option>';
-					endforeach;
-				?>
-			</datalist>
-			<button type="submit">Add Team</button>
-		</form>
+				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+					<h2>Search for the team you wish to add to this competition: </h2>
+					<input list="teams" name="selectedTeam">
+					<datalist id="teams">
+						<option value="">Select Team</option>
+						<?php
+							if (!$dbConn) {
+								echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+							} else {
+								$result = selectAllTeams($dbConn);
 
+								$allTeams = array();
+								while ($row = pg_fetch_row($result)) {
+									array_push($allTeams, $row[0]);
+								}
+							}
+
+							foreach($allTeams as $key => $value):
+								echo '<option value="'.$value.'">'.$value.'</option>';
+							endforeach;
+						?>
+					</datalist>
+					<button type="submit">Add Team</button>
+				</form>
+
+			</div>
+		</div>
 	</div>
+
 </body>
 </html>

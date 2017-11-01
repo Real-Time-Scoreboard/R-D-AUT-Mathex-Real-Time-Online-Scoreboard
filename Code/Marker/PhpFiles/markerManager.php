@@ -50,7 +50,7 @@ if(isset($_POST['request'])){
                  }
              }
          }
-         echo $string;
+         $msg -> result= $string;
 
           break;
       case "Correct":
