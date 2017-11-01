@@ -22,39 +22,44 @@ function loadPage(page) {
 
 //activated when a marker press the correct button
 function correctAnswer() {
-  //confirms action
-  var sure = confirm('Are you sure you wish to mark this question as Correct?');
 
-  if (sure) {
+  var currQuestion = $("#hiddenCurrQuestion").val();
+  if (currQuestion != 20) {
+    //confirms action
+    var sure = confirm('Are you sure you wish to mark this question as Correct?');
 
-    //retrive infomation from hidden fields of the page
-    var pageName = $("#PageName").val();
-    var currQuestion = $("#hiddenCurrQuestion").val();
-    var hiddenUserName = $("#hiddenUserName").val();
-    var hiddenCompId = $("#hiddenCompId").val();
-    var hiddenTeamInitial = $("#hiddenTeamInitial").val();
+    if (sure) {
 
-    //set the approoprate name for the cookie
-    var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
+      //retrive infomation from hidden fields of the page
+      var pageName = $("#PageName").val();
+      var hiddenUserName = $("#hiddenUserName").val();
+      var hiddenCompId = $("#hiddenCompId").val();
+      var hiddenTeamInitial = $("#hiddenTeamInitial").val();
 
-    //send reqyuest to sever using Jquery
-    $.post("PhpFiles/markerManager.php", {
+      //set the approoprate name for the cookie
+      var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
 
-      request: "Correct",
-      currentQuestion: currQuestion,
-      userName: hiddenUserName,
-      compId: hiddenCompId,
-      teamInitials: hiddenTeamInitial
+      //send reqyuest to sever using Jquery
+      $.post("PhpFiles/markerManager.php", {
 
-    }, function(data, status) {
-      if (status == "success") {
+        request: "Correct",
+        currentQuestion: currQuestion,
+        userName: hiddenUserName,
+        compId: hiddenCompId,
+        teamInitials: hiddenTeamInitial
 
-        //on success updates hidden fileds and set previous action as current
-        $("#hiddenCurrQuestion").val(parseInt(currQuestion) + 1);
-        $("#currQuestionHeading").text(parseInt(currQuestion) + 1);
-        setCookie(cookieName, "Correct", 1);
-      }
-    });
+      }, function(data, status) {
+        if (status == "success") {
+
+          //on success updates hidden fileds and set previous action as current
+          $("#hiddenCurrQuestion").val(parseInt(currQuestion) + 1);
+          $("#currQuestionHeading").text(parseInt(currQuestion) + 1);
+          setCookie(cookieName, "Correct", 1);
+        }
+      });
+    }
+  } else {
+    alert("This Team have completed all the 20 questions");
   }
 }
 
@@ -137,35 +142,40 @@ function undo() {
 
 
 function pass() {
-  var sure = confirm('Are you sure you wish to pass this question?');
-  if (sure) {
-    //retrive infomation from hidden fields of the page
-    var pageName = $("#PageName").val();
-    var currQuestion = $("#hiddenCurrQuestion").val();
-    var hiddenUserName = $("#hiddenUserName").val();
-    var hiddenCompId = $("#hiddenCompId").val();
-    var hiddenTeamInitial = $("#hiddenTeamInitial").val();
-    //set the approoprate name for the cookie
-    var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
 
-    $.post("PhpFiles/markerManager.php", {
+  var currQuestion = $("#hiddenCurrQuestion").val();
+  if (currQuestion != 20) {
 
-      request: "Pass",
-      currentQuestion: currQuestion,
-      userName: hiddenUserName,
-      compId: hiddenCompId,
-      teamInitials: hiddenTeamInitial
+    var sure = confirm('Are you sure you wish to pass this question?');
+    if (sure) {
+      //retrive infomation from hidden fields of the page
+      var pageName = $("#PageName").val();
+      var hiddenUserName = $("#hiddenUserName").val();
+      var hiddenCompId = $("#hiddenCompId").val();
+      var hiddenTeamInitial = $("#hiddenTeamInitial").val();
+      //set the approoprate name for the cookie
+      var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
 
-    }, function(data, status) {
-      if (status == "success") {
-        //on success updates hidden fileds and set previous action as current
-        $("#hiddenCurrQuestion").val(parseInt(currQuestion) + 1);
-        $("#currQuestionHeading").text(parseInt(currQuestion) + 1);
-        setCookie(cookieName, "Pass", 1);
-      }
-    });
+      $.post("PhpFiles/markerManager.php", {
+
+        request: "Pass",
+        currentQuestion: currQuestion,
+        userName: hiddenUserName,
+        compId: hiddenCompId,
+        teamInitials: hiddenTeamInitial
+
+      }, function(data, status) {
+        if (status == "success") {
+          //on success updates hidden fileds and set previous action as current
+          $("#hiddenCurrQuestion").val(parseInt(currQuestion) + 1);
+          $("#currQuestionHeading").text(parseInt(currQuestion) + 1);
+          setCookie(cookieName, "Pass", 1);
+        }
+      });
+    }
+  } else {
+    alert("This Team have completed all the 20 questions");
   }
-
 }
 
 //set cookie
