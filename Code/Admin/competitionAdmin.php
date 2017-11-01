@@ -163,12 +163,11 @@ include '../DataBaseManagement/UpdateData.php';
 						?>
 					</table>
 
-					<!-- Form to search for a team and add it to competition-->
+					<!-- Form to select a team and add it to competition-->
 					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 						<h2>Search for the team you wish to add to this competition: </h2>
-						<input list="teams" name="selectedTeam">
-						<datalist id="teams">
-							<option value="">Select Team</option>
+						<select name="selectedTeam">
+							<option value="" selected disabled>Select Team</option>
 							<?php
 							if (!$dbConn) {
 								echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
@@ -180,12 +179,11 @@ include '../DataBaseManagement/UpdateData.php';
 									array_push($allTeams, $row[0]);
 								}
 							}
-
 							foreach($allTeams as $key => $value):
 								echo '<option value="'.$value.'">'.$value.'</option>';
 							endforeach;
 							?>
-						</datalist>
+						</select>
 						<button type="submit">Add Team</button>
 					</form>
 
