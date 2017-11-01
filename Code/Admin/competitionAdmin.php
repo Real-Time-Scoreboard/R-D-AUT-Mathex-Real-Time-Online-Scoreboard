@@ -11,7 +11,7 @@
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
-		header("Location: invalidLogin.html");
+		header("Location: ../Spectator/invalidLogin.html");
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullName'];
 		if (isset($_GET['id'])) {
@@ -80,7 +80,13 @@
 				//starts competition using the computer's current time
 				if (isset($_POST['start'])) {
 					$time = date("h:i:s");
-					updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'],  $time, true);
+					$result = selectAllActiveCompetitions($dbConn);
+
+					while ($row = pg_fetch_array($result)) {
+						updateCompetitionEntry($dbConn, $row[0], $time, 'false');
+					}
+
+					updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'],  $time, 'true');
 				}
 
 				//checks if competition is active or inactive
