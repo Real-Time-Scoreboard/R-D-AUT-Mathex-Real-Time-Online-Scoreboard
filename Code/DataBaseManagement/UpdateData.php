@@ -1,8 +1,8 @@
 <?php
 
-function updateCompetitionEntry($dbConn, $compID, $startTime, $active)
+function updateCompetitionEntry($dbConn, $compID,$active)
 {
-    $query = "UPDATE Competition SET startTime = '$startTime', active = '$active' WHERE competitionId = '$compID'";
+    $query = "UPDATE Competition SET startTime = current_time, active = '$active' WHERE competitionId = '$compID'";
     return $result = pg_query($dbConn, $query);
 }
 

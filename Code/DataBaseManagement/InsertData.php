@@ -15,11 +15,6 @@ function insertNewUser($dbConn, $userName, $name, $psw, $priv)
 
 function insertIntoCompetition($dbConn, $compID, $startTime)
 {
-  //$query = "INSERT INTO Competition (competitionId, startTime, competitionDate)
-  //VALUES ('pg_escape_string($compID)',pg_escape_string('$startTime'),CURRENT_DATE)";
-
-  //$result = pg_query($dbConn, $query);
-
   $result = pg_prepare($dbConn, "competition_query", "INSERT INTO Competition (competitionId, startTime)
   VALUES ($1,$2)");
 
