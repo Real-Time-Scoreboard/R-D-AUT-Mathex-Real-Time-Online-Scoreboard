@@ -85,7 +85,7 @@ include '../DataBaseManagement/UpdateData.php';
 						//checks if the new team doesn't already exist in the database
 						$row = selectTeam($dbConn, strtoupper($_POST['teamInitials']), strtoupper($_POST['teamName']));
 						if (!$row[0]) {
-							insertIntoTeam($dbConn, $_POST['teamInitials'], $_POST['teamName']);
+							insertIntoTeam($dbConn, strtoupper($_POST['teamInitials']), $_POST['teamName']);
 							echo $msg = $_POST['teamName'] . " has been successfully created!";
 						} else {
 							echo "That team already exists!";
