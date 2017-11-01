@@ -66,7 +66,7 @@ closeConn($dbConn);
 	<input type="hidden" id="hiddenCurrQuestion" value=<?php echo $currquestion ?> />
 
   <!-- The Modal -->
-  <div id="myModal" class="modal">
+  <div id="myModal" class="modal container">
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
@@ -81,7 +81,6 @@ closeConn($dbConn);
   </div>
 
 	<div class="mx-auto text-center" id="teamSelectedShow">
-
 
 		<h2 class="my-5">TEAM: <?php  if ($team[0] == ""){echo "No Team Selected";} else { echo  $team[0];} ?></h2>
 		<h3> Current Question: </h3>
@@ -107,7 +106,7 @@ closeConn($dbConn);
 		</div>
     <div class="text-center my-2 mx-auto" id="teamSelectedShow">
         <!-- Trigger/Open The Modal -->
-      <button class = "btn btn-default  historyBtn" id="myBtn">History</button>
+      <button class = "btn btn-default  historyBtn" id="myBtn" hidden>History</button>
     </div>
 	</div>
 </body>

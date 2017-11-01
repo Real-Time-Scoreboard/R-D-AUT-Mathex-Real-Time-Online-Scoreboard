@@ -63,7 +63,7 @@ if($teamInfo != false) {
 		<input type="hidden" id="hiddenTeamInitial" value=<?php echo $team[1] ?> />
 		<input type="hidden" id="hiddenCurrQuestion" value=<?php echo $currquestion ?> />
 
-    <div id="myModal" class="modal">
+    <div id="myModal" class="modal container">
       <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-header">
@@ -105,7 +105,7 @@ if($teamInfo != false) {
 
       <div class="text-center my-2 mx-auto" id="teamSelectedShow">
         <!-- Trigger/Open The Modal -->
-        <button class = "btn btn historyBtn" id="myBtn">History</button>
+        <button class = "btn btn historyBtn" id="myBtn" hidden>History</button>
 
       </div>
 	</div>

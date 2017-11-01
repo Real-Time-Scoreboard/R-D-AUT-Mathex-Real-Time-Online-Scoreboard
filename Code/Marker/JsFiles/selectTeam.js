@@ -49,7 +49,6 @@ function setDropBox(elementName, data) {
 }
 
 function selectToBeMarked(field) {
-
   var element = document.getElementById(field).value;
   var hiddenUserName = $("#hiddenUserName").val();
   var hiddenCompId = $("#hiddenCompId").val();

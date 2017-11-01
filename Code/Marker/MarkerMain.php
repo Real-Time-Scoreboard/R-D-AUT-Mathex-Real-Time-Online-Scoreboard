@@ -43,7 +43,7 @@ closeConn($dbConn);
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
   <link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="CssFiles/mainStyle.css">
   <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
