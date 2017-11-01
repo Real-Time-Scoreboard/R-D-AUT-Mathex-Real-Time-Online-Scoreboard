@@ -1,10 +1,10 @@
-<!-- 
+<!--
 	PHP file which contains functionality for admin to manage a competition.
 	Can add/remove teams as well as start or delete the competition.
 -->
 
-<!-- 
-	PHP to check if user is actually logged into the page with correct privileges. 
+<!--
+	PHP to check if user is actually logged into the page with correct privileges.
 	Redirects them if they are not.
 -->
 
@@ -67,7 +67,7 @@
 
 			<div class="my-5">
 
-				
+
 	<h1>Edit Competition</h1>
 	<div class="content_container">
 
@@ -78,21 +78,21 @@
 			<li class="navbar"><a href="addUser.php">Users</a></li>
 			<li class="navbar"><a href="logout.php">Logout</a></li>
 		</ul>
-		
+
 		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
-		
+
 		<!-- PHP code to display the current status of the competition as well as start one-->
 		<h2>Competition <?php echo $_SESSION['selectedCompetition'] ?> Status:
 			<?php
 				$dbConn = openConnection();
-				
+
 				//starts competition using the computer's current time
 				if (isset($_POST['start'])) {
 					$time = date("h:i:s");
 					updateCompetitionEntry($dbConn, $_SESSION['selectedCompetition'],  $time, true);
 				}
-				
+
 				//checks if competition is active or inactive
 				$result = getCompetitionStatus($dbConn, $_SESSION['selectedCompetition']);
 				if ($result) {
@@ -108,7 +108,7 @@
 			<input type="hidden" name="start" value="placeholder">
 			<button id="start" onclick="confirm('Are you sure you wish to start this competition?')">Start Competition</button>
 		</form>
-		
+
 		<!-- Form to delete competition-->
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<input type="hidden" name="delete" value="placeholder">
@@ -131,7 +131,7 @@
 				} else {
 					//checks if user wishes to add a new team
 					if (isset($_POST['selectedTeam'])) {
-						//checks that team exists 
+						//checks that team exists
 						$row = selectTeam($dbConn, $_POST['selectedTeam'], "DUMMY");
 						if (isset($row[0])) {
 							//checks that team is not already added to the current competition
@@ -169,7 +169,7 @@
 				}
 			?>
 		</table>
-		
+
 		<!-- Form to search for a team and add it to competition-->
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<h2>Search for the team you wish to add to this competition: </h2>
@@ -218,6 +218,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 </body>
 </html>
