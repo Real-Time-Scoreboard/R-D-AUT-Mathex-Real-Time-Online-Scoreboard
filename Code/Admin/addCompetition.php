@@ -1,3 +1,10 @@
+
+<!-- 
+	PHP file used to display a list of competitions in the database
+	and present a form to the user which allows them to add a new 
+	competition.
+-->
+
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
@@ -28,6 +35,7 @@
 </head>
 <body>
 
+
 	<div class="container">
     <div class="content_container">
 
@@ -51,71 +59,69 @@
     	</ul>
 
 			<div class="my-5">
+		
+		<!-- PHP code to print a message declaring the user that is logged in-->
+		<?php echo $msg; ?>
 
-				<?php echo $msg; ?>
+		<!-- Form to add a competition -->
+		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+			<h2>New competition:</h2>
+			<input type="text" name ="competitionid" style="width:40%" placeholder="Unique competition name" maxlength="6" required>
+			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this competition?')">Add</button>
+		</form>
+		
+		<!-- PHP code to insert a newly created competition into the database-->
+		<?php
+			if (isset($_POST['competitionid'])) {
+				$dbConn = openConnection();
+			 if (!$dbConn) {
+		      		echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+			  } else {
 
-				<!-- Form to add a compeition -->
-				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-					<h2>New competition:</h2>
-					<input type="text" name ="competitionid" style="width:40%" placeholder="Unique competition name" maxlength="6" required>
-					<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this competition?')">Add</button>
-				</form>
+					$row = selectCompetitionID($dbConn, strtoupper($_POST['competitionid']));
 
-				<?php
-					if (isset($_POST['competitionid'])) {
-						$dbConn = openConnection();
-					  if (!$dbConn) {
-				      echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-					  } else {
+					if (!$row[0]) {
+						insertIntoCompetition($dbConn, $_POST['competitionid'], $time = date("h:i:s"));
+						echo $msg = $_POST['competitionid'] . " has been successfully created!";
+					} else {
+						echo "That competition already exists!";
+					}
+				}
+			}
+		?>
+		<br>
+		<h2>Existing Competitions:</h2>
+		<!-- List of Competitions -->
+		<table style="width:50%">
+			<tr>
+				<th>Competition Name</th>
+				<th>Active</th>
+			</tr>
+			<!--Code which creates a table entry for each competition entry in the database-->
+			<?php
 
-							$row = selectCompetitionID($dbConn, strtoupper($_POST['competitionid']));
+				$dbConn = openConnection();
+				if (!$dbConn) {
+					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+				} else {
+					$result = selectAllCompetitions($dbConn);
 
-							if (!$row[0]) {
-								insertIntoCompetition($dbConn, $_POST['competitionid'], $time = date("h:i:s"));
-								echo $msg = $_POST['competitionid'] . " has been successfully created!";
-							} else {
-								echo "That competition already exists!";
-							}
+					while ($row = pg_fetch_array($result)) {
+						echo "<tr>";
+						echo "<td><a href='competitionAdmin.php?id=" . $row[0] . "'>$row[0]</a></td>";
+						echo "<td>";
+						if ($row[2]) {
+							echo "Yes";
+						} else {
+							echo "No";
+
 						}
 					}
-				?>
-
-				<br>
-				<h2>Existing Competitions:</h2>
-				<!-- List of Competitions -->
-				<table style="width:50%">
-					<tr>
-						<th>Competition Name</th>
-						<th>Active</th>
-					</tr>
-					<?php
-
-						$dbConn = openConnection();
-						if (!$dbConn) {
-							echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-						} else {
-							$result = selectAllCompetitions($dbConn);
-
-							while ($row = pg_fetch_array($result)) {
-								echo "<tr>";
-								echo "<td><a href='competitionAdmin.php?id=" . $row[0] . "'>$row[0]</a></td>";
-								echo "<td>";
-								if ($row[2]) {
-									echo "Yes";
-								} else {
-									echo "No";
-								}
-								echo "</td>";
-								echo "</tr>";
-							}
-						}
-					?>
+				?>				
 				</table>
-			</div>
+			
   	</div>
 	</div>
-
-
 </body>
 
 </html>
