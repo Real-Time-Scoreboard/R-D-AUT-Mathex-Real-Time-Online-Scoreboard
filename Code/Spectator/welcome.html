@@ -15,37 +15,41 @@ Provides navigation links to login and spectator views.
 	<link rel="stylesheet" href="../style/mainStyler.css">
 	<link rel="stylesheet" href="../style/welcomeStyle.css">
 
-  <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="../style/menuSelector.js"></script>
-  <script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
-  <script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../style/menuSelector.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
+	<script src="../bootstrap-4.0.0-beta-dist/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-
 	<div class="container">
-    <div class="content_container">
+		<div class="header">
+			<h1>Mathex Real Time Online Scoreboard</h1>
+		</div>
+		<div class="content_container">
+			<ul class="nav nav-fill bg-dark" id="my_menu ">
+				<li class="nav-item current">
+					<a class="nav-link " href="welcome.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="search.php">Search Team</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link "  href="leaderboard.php">Leaderboard</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="login.php">Login</a>
+				</li>
+			</ul>
 
-      <div class="header">
-        <h1>Mathex Real Time Online Scoreboard</h1>
-      </div>
-
-      <ul class="nav nav-fill bg-dark" id="my_menu ">
-        <li class="nav-item current">
-        	<a class="nav-link " href="welcome.html">Home</a>
-      	</li>
-      	<li class="nav-item">
-        	<a class="nav-link" href="search.php">Search Team</a>
-      	</li>
-      	<li class="nav-item ">
-        	<a class="nav-link "  href="leaderboard.php">Leaderboard</a>
-      	</li>
-      	<li class="nav-item">
-        	<a class="nav-link" href="login.php">Login</a>
-      	</li>
-    	</ul>
-
-			<div class="my-5">
+			<div class="mx-auto center_div">
+				<h2>Welcome to the Real Time Online Scoreboard system!</h2>
+				<br>
+				<ul>
+					<li>Click on the appropriate button below to access the system.</li>
+					<li>Please note that login is only necessary for administrators and markers.</li>
+					<li>If you are a spectator, simple click on the green button to proceed</li>
+				</ul>
 				<!--Buttons to query type of user-->
 				<button type="submit" onclick="location.href='leaderboard.php';" >
 					<span>Click here if you are a Spectator</span>
@@ -55,7 +59,8 @@ Provides navigation links to login and spectator views.
 					<span>Click here if you wish to Login as a Marker or Admin</span>
 				</button>
 			</div>
-  	</div>
+			<div style="padding-bottom: 70px"></div>
+		</div>
 	</div>
 </body>
 </html>

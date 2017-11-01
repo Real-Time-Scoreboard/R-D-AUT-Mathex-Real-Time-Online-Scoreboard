@@ -1,7 +1,7 @@
 body {
-  margin: 1%;
-  overflow-y: hidden;
-  background-color: lightgreen;
+  /*margin: 1%;*/
+  /*overflow-y: hidden;*/
+  background-color: rgb(235,235,235);
   color: #333;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
@@ -10,18 +10,20 @@ body {
   height: 100%;
   width: 100%;
   background-color: white;
-  padding: 50px;
 }
 
 .header {
   text-align: center;
-  margin-top: 0px;
-  padding-bottom: 30px;
+  margin: 0px;
+  padding: 0px;
+  padding-bottom: 10px;
 }
 
 ul.nav {
   background-color: #333;
   color: white;
+  padding: 0px;
+  margin-bottom: 20px;
 }
 
 li.nav-item {}
@@ -48,6 +50,11 @@ li.nav-item:hover:not(.current) {
 
 .current {
   background-color: #4CAF50;
+}
+
+h1 {
+  background-color: rgb(235,235,235);
+  padding-top: 20px;
 }
 
 .selectLabel {
@@ -81,6 +88,8 @@ li.nav-item:hover:not(.current) {
   /* For mobile phones: */
   .content_container {
     padding: 5px;
+    height: inherit;
+    width: inherit;
   }
   .header {
     margin-top: 5px;

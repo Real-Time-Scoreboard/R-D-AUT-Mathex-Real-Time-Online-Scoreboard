@@ -1,7 +1,6 @@
 .leaderboard-container {
 	margin: 0px;
-	padding: 20px;
-	border: solid black 2px;
+	padding: 0px;
 	overflow: hidden;
 }
 
@@ -9,5 +8,17 @@
 	width: 50%;
 	float: left;
 	margin-bottom: 10px;
+	text-align: center;
+}
+
+.timer {
+	text-align:right;
+	padding: 0;
+	padding-bottom: 20px;
+	padding-right: 10px;
+	margin: 0;
+}
+
+tr, th, td {
 	text-align: center;
 }

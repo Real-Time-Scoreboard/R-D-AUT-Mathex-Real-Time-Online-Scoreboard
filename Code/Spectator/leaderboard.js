@@ -124,11 +124,12 @@ the leaderboard. Contains the team initials and their scores for the top 5 teams
 in the competition.
 */
 function updateTable(newLabels, newData){
-  var output = "<tr><th>Team Initials</th><th>Score</th></tr>";
+  var output = "<table style=\"width:80%\"><tr><th>Team Initials</th><th>Score</th></tr>";
   for (i = 0; i < 5; i++){
     output += "<tr><td>" + newLabels[i] + "</td>";
     output += "<td>" + newData[i] + "</td></tr>";
   }
+  output += "</table>"
   document.getElementById("leaderboard-table").innerHTML = output;
 }
 
@@ -144,7 +145,7 @@ function createChart(){
     options: {
       elements: {
         rectangle: {
-          borderWidth: 2,
+          borderWidth: 10,
         }
       },
       responsive: true,
@@ -154,7 +155,8 @@ function createChart(){
       scales: {
         xAxes: [{
           ticks: {
-            beginAtZero:true
+            beginAtZero:true,
+            max:100,
           }
         }]
       }

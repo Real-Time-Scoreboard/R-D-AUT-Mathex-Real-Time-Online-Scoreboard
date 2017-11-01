@@ -45,10 +45,10 @@ if (!$activeCompetition){
 </head>
 <body>
 	<div class="container">
+		<div class="header">
+			<h1>Leaderboard</h1>
+		</div>
 		<div class="content_container">
-			<div class="header">
-				<h1>Leaderboard</h1>
-			</div>
 			<ul class="nav nav-fill bg-dark" id="my_menu ">
 				<li class="nav-item">
 					<a class="nav-link " href="welcome.html">Home</a>
@@ -63,29 +63,29 @@ if (!$activeCompetition){
 					<a class="nav-link" href="login.php">Login</a>
 				</li>
 			</ul>
-			
+
 			<div class="my-5">
-				<!-- Timer -->
-				<div id="timer" style="text-align:right">Time Remaining: </div>
 				<div class="leaderboard-container">
-					<div class="other-components-container" id="mainDisplay">
+					<!-- Timer -->
+					<div id="timer" class="timer">Time Remaining: </div>
+					<div class="mx-auto center_div" style="margin-top: 0px; text-align: center" id="mainDisplay">
 						<h2>Competition</h2>
 						<!-- Chart js object -->
-						<canvas id="myChart" width="400" height="250"></canvas>
+						<canvas id="myChart" width="700" height="550"></canvas>
 						<!-- leaderboard table -->
-						<table id="leaderboard-table" style="width:50%"></table>
-					</div>
-					<div class="other-components-container">
-						<!-- Top Team -->
-						<div class="other-components-container" id="topTeam"></div>
-						<!-- My selected Team -->
-						<div class="other-components-container" id="myTeam"></div>
+						<div id="leaderboard-table" style="width:100%"></div>
 						<!-- Buttons to change view for the leaderboard -->
-						<div class="other-components-container" style="clear: left">
+						<div class="other-components-container" style="width: 100%; padding-bottom: 10px">
 							VIEW TYPE <br>
 							<button type="button" id="chartButton">Chart</button>
 							<button type="button" id="tableButton">Table</button>
 						</div>
+					</div>
+					<div style="margin:0; width: 100%">
+						<!-- Top Team -->
+						<div class="other-components-container" id="topTeam"></div>
+						<!-- My selected Team -->
+						<div class="other-components-container" id="myTeam"></div>
 					</div>
 				</div>
 
