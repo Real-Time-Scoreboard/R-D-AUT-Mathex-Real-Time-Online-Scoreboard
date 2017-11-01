@@ -53,16 +53,16 @@
   		      $row = selectPrivilegedUser($dbConn, $_POST['userName'], $_POST['password']);
   					$privilege = $row[0];
   					$fullname = $row[1];
-  					if ($privilege == 'Marker' || $privilege == 'Admin'){
+  					if ($privilege == 'Marker' || $privilege == 'Admin' || $privilege == 'marker' || $privilege == 'admin'){
   						echo $fullname . ": Marker";
   						$_SESSION['valid'] = true;
   						$_SESSION['privilege'] = $privilege;
   						$_SESSION['fullName'] = $fullname;
               $_SESSION['userName'] = $_POST["userName"];
-  						if ($privilege == 'Marker'){
+  						if ($privilege == 'Marker' || $privilege == 'marker'){
   							header("Location: ../Marker/MarkerMain.php");
   							exit();
-  						} else if ($privilege == 'Admin'){
+  						} else if ($privilege == 'Admin' || $privilege == 'admin'){
   							header("Location: ../Admin/addCompetition.php");
   							exit();
   						}
