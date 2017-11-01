@@ -1,3 +1,10 @@
+
+<!-- 
+	PHP file used to display a list of competitions in the database
+	and present a form to the user which allows them to add a new 
+	competition.
+-->
+
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
@@ -30,21 +37,23 @@
 			<li class="navbar"><a href="addUser.php">Users</a></li>
 			<li class="navbar"><a href="logout.php">Logout</a></li>
 		</ul>
-
+		
+		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
 
-		<!-- Form to add a compeition -->
+		<!-- Form to add a competition -->
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<h2>New competition:</h2>
 			<input type="text" name ="competitionid" style="width:40%" placeholder="Unique competition name" maxlength="6" required>
 			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this competition?')">Add</button>
 		</form>
-
+		
+		<!-- PHP code to insert a newly created competition into the database-->
 		<?php
 			if (isset($_POST['competitionid'])) {
 				$dbConn = openConnection();
-			  if (!$dbConn) {
-		      echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
+			 if (!$dbConn) {
+		      		echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
 			  } else {
 
 					$row = selectCompetitionID($dbConn, strtoupper($_POST['competitionid']));
@@ -67,6 +76,7 @@
 				<th>Competition Name</th>
 				<th>Active</th>
 			</tr>
+			<!--Code which creates a table entry for each competition entry in the database-->
 			<?php
 
 				$dbConn = openConnection();
