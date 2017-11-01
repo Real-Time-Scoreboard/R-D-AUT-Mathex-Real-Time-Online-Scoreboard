@@ -8,7 +8,7 @@
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
-		header("Location: invalidLogin.html");
+		header("Location: ../Spectator/invalidLogin.html");
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullName'];
 	}
