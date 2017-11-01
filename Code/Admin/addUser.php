@@ -11,7 +11,7 @@
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
-		header("Location: invalidLogin.html");
+		header("Location: ../Spectator/invalidLogin.html");
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullName'];
 	}
@@ -76,8 +76,8 @@
 			<input type="text" name="password" style="width:40%" required>
 			<br>Privilege:
 			<select name="privilege">
-				<option value="TeamA">Marker</option>
-				<option value="TeamB">Admin</option>
+				<option value="Marker">Marker</option>
+				<option value="Admin">Admin</option>
 			</select>
 			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this user?')">Add</button>
 		</form>
@@ -150,54 +150,14 @@
 												</form></td>';
 
 						} else {
-							$result = deleteUser($dbConn, $_POST['usernametodelete'], $_POST['fullnametodelete']);
-							if (isset($result)) {
-								echo "User " . $_POST['usernametodelete'] . " has been successfully deleted!";
+								echo "<td>Logged In</td>";
 							}
+							echo "</tr>";
 						}
 					}
-				}
 			?>
 
-				<br>
-				<h2>Existing Users:</h2>
-				<!-- List of Users -->
-				<table style="width:90%">
-					<tr>
-						<th>User ID</th>
-						<th>Full name</th>
-						<th>Password</th>
-						<th>Privilege</th>
-						<th>Delete</th>
-					</tr>
-					<?php
-
-						$dbConn = openConnection();
-						if (!$dbConn) {
-							echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-						} else {
-							$result = selectAllUsers($dbConn);
-
-							while ($row = pg_fetch_array($result)) {
-								echo "<tr>";
-								echo "<td>" . $row[0] . "</td>";
-								echo "<td>" . $row[1] . "</td>";
-								echo "<td>" . $row[2] . "</td>";
-								echo "<td>" . $row[3] . "</td>";
-								if ($row[1] != $_SESSION['fullName']) {
-									echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
-														<input type="hidden" name="usernametodelete" value="', $row[0], '">
-														<input type="hidden" name="fullnametodelete" value="', $row[1], '">
-														<button type="submit" id="delete" onclick="return confirm(\'Are you sure you wish to delete this team?\');">Delete</button>
-														</form></td>';
-								} else {
-									echo "<td>Logged In</td>";
-								}
-								echo "</tr>";
-							}
-						}
-					?>
-				</table>
+			</table>
 
 			</div>
   	</div>

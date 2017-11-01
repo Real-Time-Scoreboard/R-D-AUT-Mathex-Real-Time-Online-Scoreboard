@@ -8,7 +8,7 @@
 <?php
 	session_start();
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
-		header("Location: invalidLogin.html");
+		header("Location: ../Spectator/invalidLogin.html");
 	} else {
 		$msg = "Logged in as: " . $_SESSION['fullName'];
 	}
@@ -111,7 +111,7 @@
 						echo "<tr>";
 						echo "<td><a href='competitionAdmin.php?id=" . $row[0] . "'>$row[0]</a></td>";
 						echo "<td>";
-						if ($row[2]) {
+						if ($row[2] == 't') {
 							echo "Yes";
 						} else {
 							echo "No";
