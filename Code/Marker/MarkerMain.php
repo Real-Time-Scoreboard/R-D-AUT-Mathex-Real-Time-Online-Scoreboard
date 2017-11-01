@@ -63,7 +63,7 @@ closeConn($dbConn);
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
   <link rel="stylesheet" href="../bootstrap-4.0.0-beta-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../style/mainStyler.css">
+  <link rel="stylesheet" href="../style/mainStyle.css">
   <script type="text/javascript" src="../JQuery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="JsFiles/marker.js"></script>
   <script src="../bootstrap-4.0.0-beta-dist/js/popper.min.js"></script>
