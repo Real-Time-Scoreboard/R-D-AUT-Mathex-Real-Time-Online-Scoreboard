@@ -1,5 +1,5 @@
 
-<!-- 
+<!--
 	PHP file used to display a list of teams in the database
 	and present a form to the user which allows them to add or delete
 	a new team to the database.
@@ -50,15 +50,15 @@
         	<a class="nav-link" href="addTeam.php">Teams</a>
       	</li>
       	<li class="nav-item ">
-        	<a class="nav-link "  href="href="addUser.php"">Users</a>
+        	<a class="nav-link "  href="addUser.php">Users</a>
       	</li>
       	<li class="nav-item">
         	<a class="nav-link" href="logout.php">Logout</a>
       	</li>
     	</ul>
 
-			<div class="my-5">				
-		
+			<div class="my-5">
+
 		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
 
@@ -75,7 +75,7 @@
 			<br>
 			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this team?')">Add</button>
 		</form>
-		
+
 		<!-- PHP code to add a new team to the database or delete one. -->
 		<?php
 			//checks if user wants to add a team to the database
@@ -103,9 +103,10 @@
 					$result = deleteTeam($dbConn, $_POST['teamnametodelete'], $_POST['teaminitialstodelete']);
 					if (isset($result)) {
 						echo $_POST['teamnametodelete'] . " has been successfully deleted!";
-
 					}
-				?>
+				}
+			}
+		?>
 
 		<br>
 		<h2>Existing Teams:</h2>
@@ -122,7 +123,7 @@
 				$dbConn = openConnection();
 				if (!$dbConn) {
 					echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-				} else
+				} else {
 					$result = selectAllTeams($dbConn);
 
 							while ($row = pg_fetch_array($result)) {
@@ -136,8 +137,8 @@
 													</form></td>';
 								echo "</tr>";
 							}
-						}
-					?>
+					}
+				?>
 				</table>
 			</div>
   	</div>

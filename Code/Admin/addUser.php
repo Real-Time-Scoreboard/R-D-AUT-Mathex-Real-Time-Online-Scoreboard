@@ -1,11 +1,11 @@
-<!-- 
+<!--
 	PHP file used to display a list of users in the database
-	and present a form to the user which allows them to add a new 
+	and present a form to the user which allows them to add a new
 	user or delete an existing one.
 -->
 
-<!-- 
-	PHP to check if user is actually logged into the page with correct privileges. 
+<!--
+	PHP to check if user is actually logged into the page with correct privileges.
 	Redirects them if they are not.
 -->
 <?php
@@ -81,7 +81,7 @@
 			</select>
 			<button type="submit" id="add" onclick="return confirm('Are you sure you wish to add this user?')">Add</button>
 		</form>
-		
+
 		<!-- PHP code to add or delete a user-->
 		<?php
 			//checks if user wants to add a new user to the database
@@ -156,7 +156,8 @@
 							}
 						}
 					}
-				?>
+				}
+			?>
 
 				<br>
 				<h2>Existing Users:</h2>
