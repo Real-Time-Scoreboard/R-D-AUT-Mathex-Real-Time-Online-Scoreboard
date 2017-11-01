@@ -60,7 +60,7 @@ closeConn($dbConn);
 
       <p>
           <label class="selectLabel" for="selectTeam">Select Team :</label>
-          <select class="inputBar  id="selectTeam" type="text" name="selectTeam"> <!--drop down list -->
+          <select class="inputBar"  id="selectTeam" type="text" name="selectTeam"> <!--drop down list -->
             <option value="" disabled selected >Please choose...</option>
           </select>
         <input type="button" class = "btn btn-default" value="Select" onclick ='selectToBeMarked("selectTeam")'>
