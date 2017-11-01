@@ -13,7 +13,7 @@
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
 		header("Location: invalidLogin.html");
 	} else {
-		$msg = "Logged in as: " . $_SESSION['fullname'];
+		$msg = "Logged in as: " . $_SESSION['fullName'];
 		if (isset($_GET['id'])) {
 			//gets the current competition id and saves to session variable
 			$_SESSION['selectedCompetition'] = $_GET['id'];
@@ -58,26 +58,16 @@
 					<a class="nav-link" href="addTeam.php">Teams</a>
 				</li>
 				<li class="nav-item ">
-					<a class="nav-link "  href="href="addUser.php"">Users</a>
+					<a class="nav-link "  href="addUser.php">Users</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="logout.php">Logout</a>
+					<a class="nav-link" href="../Spectator/logout.php">Logout</a>
 				</li>
 			</ul>
 
 			<div class="my-5">
 
-
-	<h1>Edit Competition</h1>
 	<div class="content_container">
-
-		<!-- Navigation bar -->
-		<ul class="navbar">
-			<li class="navbar"><a href="addCompetition.php" class="current">Competition</a></li>
-			<li class="navbar"><a href="addTeam.php">Teams</a></li>
-			<li class="navbar"><a href="addUser.php">Users</a></li>
-			<li class="navbar"><a href="logout.php">Logout</a></li>
-		</ul>
 
 		<!-- PHP code to print a message declaring the user that is logged in-->
 		<?php echo $msg; ?>
@@ -106,13 +96,13 @@
 		<!-- Form to start competition-->
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<input type="hidden" name="start" value="placeholder">
-			<button id="start" onclick="confirm('Are you sure you wish to start this competition?')">Start Competition</button>
+			<button id="start" onclick="return confirm('Are you sure you wish to start this competition?')">Start Competition</button>
 		</form>
 
 		<!-- Form to delete competition-->
 		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 			<input type="hidden" name="delete" value="placeholder">
-			<button id="remove" onclick="confirm('Are you sure you wish to delete this competition?')">Delete Competition</button>
+			<button id="remove" onclick="return confirm('Are you sure you wish to delete this competition?')">Delete Competition</button>
 		</form>
 
 		<br>
@@ -142,7 +132,7 @@
 							} else {
 								echo "That team is already in the competition!";
 							}
-
+						}
 					}
 					//checks if user wishes to delete a team
 					if (isset($_POST['teamInitialstodelete'])) {
@@ -171,25 +161,6 @@
 		</table>
 
 		<!-- Form to search for a team and add it to competition-->
-		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-			<h2>Search for the team you wish to add to this competition: </h2>
-			<input list="teams" name="selectedTeam">
-			<datalist id="teams">
-				<option value="">Select Team</option>
-				<?php
-					if (!$dbConn) {
-						echo "Connection Failed: <br/>".pg_last_error($dbConn) ;
-					} else {
-						$result = selectAllTeams($dbConn);
-
-						$allTeams = array();
-						while ($row = pg_fetch_row($result)) {
-							array_push($allTeams, $row[0]);
-
-						}
-					?>
-				</table>
-
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 					<h2>Search for the team you wish to add to this competition: </h2>
 					<input list="teams" name="selectedTeam">

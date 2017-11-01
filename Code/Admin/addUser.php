@@ -13,7 +13,7 @@
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
 		header("Location: invalidLogin.html");
 	} else {
-		$msg = "Logged in as: " . $_SESSION['fullname'];
+		$msg = "Logged in as: " . $_SESSION['fullName'];
 	}
 	include '../DataBaseManagement/ConnectionManager.php';
 	include '../DataBaseManagement/InsertData.php';
@@ -57,7 +57,7 @@
         	<a class="nav-link "  href="href="addUser.php"">Users</a>
       	</li>
       	<li class="nav-item">
-        	<a class="nav-link" href="logout.php">Logout</a>
+        	<a class="nav-link" href="../Spectator/logout.php">Logout</a>
       	</li>
     	</ul>
 
@@ -142,7 +142,7 @@
 						echo "<td>" . $row[3] . "</td>";
 						//checks each user to see if they are the user currently logged in or not
 						//to prevent user from accidentally deleting themselves
-						if ($row[1] != $_SESSION['fullname']) {
+						if ($row[1] != $_SESSION['fullName']) {
 							echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
 												<input type="hidden" name="usernametodelete" value="', $row[0], '">
 												<input type="hidden" name="fullnametodelete" value="', $row[1], '">
@@ -184,7 +184,7 @@
 								echo "<td>" . $row[1] . "</td>";
 								echo "<td>" . $row[2] . "</td>";
 								echo "<td>" . $row[3] . "</td>";
-								if ($row[1] != $_SESSION['fullname']) {
+								if ($row[1] != $_SESSION['fullName']) {
 									echo '<td><form action="', htmlspecialchars($_SERVER['PHP_SELF']), '" method="post">
 														<input type="hidden" name="usernametodelete" value="', $row[0], '">
 														<input type="hidden" name="fullnametodelete" value="', $row[1], '">

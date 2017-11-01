@@ -102,6 +102,12 @@ function selectUser($dbConn, $username, $fullname, $password, $privilege) {
   return pg_fetch_row($result);
 }
 
+function selectTeam($dbConn, $teaminitials, $teamname) {
+  $query = "SELECT * FROM team WHERE teaminitials = '$teaminitials' OR teamname = '$teamname'";
+  $result = pg_query($dbConn, $query);
+  return pg_fetch_row($result);
+}
+
 function selectStartTime($dbConn, $activeCompetition){
   $query = "SELECT starttime FROM competition WHERE competitionid = '$activeCompetition'";
   return pg_fetch_row(pg_query($dbConn, $query))[0];
