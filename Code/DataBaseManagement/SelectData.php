@@ -80,6 +80,11 @@ function selectAllTeams($dbConn) {
   return pg_query($dbConn, $query);
 }
 
+function selectAllActiveCompetitions($dbConn) {
+  $query = "SELECT competitionid FROM competition WHERE active = true";
+  return pg_query($dbConn, $query);
+}
+
 function selectAllUsers($dbConn) {
   $query = "SELECT * FROM privilegeduser ORDER BY fullname DESC";
   return pg_query($dbConn, $query);
