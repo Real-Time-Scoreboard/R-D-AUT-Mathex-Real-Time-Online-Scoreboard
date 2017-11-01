@@ -1,27 +1,43 @@
+/**
+This file manages the inputs from Marker for each team. It has methods the perform the correct actions
+for when the correct,undo and pass buttons are pressed. Those methods will be called from The Team(X).php files.
+Support methods foe adding and retriving cokkies are also available, these assists keeping track of Markers privious inputs for each team.
+These file is linked to all Marker's domain files.
+**/
+
+
 $(document).ready(function() {
 
-    $('li.nav-item').click(function(){
-  $(this).addClass('current').siblings().removeClass('current');
+  //Set the current pressed button from the navbar by adding class current.
+  $('li.nav-item').click(function() {
+    $(this).addClass('current').siblings().removeClass('current');
   });
 
 });
 
-//loads page when a button is pressed and load it into a div
+//loads page when a button is pressed in the navbar and load it into a div, part of the page ( the content)
 function loadPage(page) {
   $("#displayBody").load(page);
 }
 
+//activated when a marker press the correct button
 function correctAnswer() {
+  //confirms action
   var sure = confirm('Are you sure you wish to mark this question as Correct?');
+
   if (sure) {
+
+    //retrive infomation from hidden fields of the page
     var pageName = $("#PageName").val();
     var currQuestion = $("#hiddenCurrQuestion").val();
     var hiddenUserName = $("#hiddenUserName").val();
     var hiddenCompId = $("#hiddenCompId").val();
     var hiddenTeamInitial = $("#hiddenTeamInitial").val();
 
+    //set the approoprate name for the cookie
     var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
 
+    //send reqyuest to sever using Jquery
     $.post("PhpFiles/markerManager.php", {
 
       request: "Correct",
@@ -32,6 +48,8 @@ function correctAnswer() {
 
     }, function(data, status) {
       if (status == "success") {
+
+        //on success updates hidden fileds and set previous action as current
         $("#hiddenCurrQuestion").val(parseInt(currQuestion) + 1);
         $("#currQuestionHeading").text(parseInt(currQuestion) + 1);
         setCookie(cookieName, "Correct", 1);
@@ -44,12 +62,13 @@ function IncorrectAnswer() {
 
   var sure = confirm('Are you sure you wish to mark this question as Correct?');
   if (sure) {
+    //retrive infomation from hidden fields of the page
     var pageName = $("#PageName").val();
     var currQuestion = $("#hiddenCurrQuestion").val();
     var hiddenUserName = $("#hiddenUserName").val();
     var hiddenCompId = $("#hiddenCompId").val();
     var hiddenTeamInitial = $("#hiddenTeamInitial").val();
-
+    //set the approoprate name for the cookie
     var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
     $.post("PhpFiles/markerManager.php", {
 
@@ -72,14 +91,16 @@ function undo() {
   var sure = confirm('Are you sure you return to the previous question?');
 
   if (sure) {
+    //retrive infomation from hidden fields of the page
     var pageName = $("#PageName").val();
     var currQuestion = $("#hiddenCurrQuestion").val();
     var hiddenUserName = $("#hiddenUserName").val();
     var hiddenCompId = $("#hiddenCompId").val();
     var hiddenTeamInitial = $("#hiddenTeamInitial").val();
-
+    //set the approoprate name for the cookie
     var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
-    var cookie = checkCookie(hiddenCompId + hiddenTeamInitial + "previousQuestion");
+    var cookie = checkCookie(hiddenCompId + hiddenTeamInitial + "previousQuestion"); // gets previos actions
+
     if (cookie === "none" || currQuestion <= 0) {
       alert("You can't undo. No Previous Action registered or current question number is 0");
     } else if (cookie === "Undo") {
@@ -97,6 +118,7 @@ function undo() {
 
       }, function(data, status) {
         if (status == "success") {
+          //on success updates hidden fileds and set previous action as current
           $("#hiddenCurrQuestion").val(parseInt(currQuestion) - 1);
           $("#currQuestionHeading").text(parseInt(currQuestion) - 1);
           setCookie(cookieName, "Undo", 1);
@@ -117,13 +139,13 @@ function undo() {
 function pass() {
   var sure = confirm('Are you sure you wish to pass this question?');
   if (sure) {
-
+    //retrive infomation from hidden fields of the page
     var pageName = $("#PageName").val();
     var currQuestion = $("#hiddenCurrQuestion").val();
     var hiddenUserName = $("#hiddenUserName").val();
     var hiddenCompId = $("#hiddenCompId").val();
     var hiddenTeamInitial = $("#hiddenTeamInitial").val();
-
+    //set the approoprate name for the cookie
     var cookieName = hiddenCompId + hiddenTeamInitial + "previousQuestion";
 
     $.post("PhpFiles/markerManager.php", {
@@ -136,6 +158,7 @@ function pass() {
 
     }, function(data, status) {
       if (status == "success") {
+        //on success updates hidden fileds and set previous action as current
         $("#hiddenCurrQuestion").val(parseInt(currQuestion) + 1);
         $("#currQuestionHeading").text(parseInt(currQuestion) + 1);
         setCookie(cookieName, "Pass", 1);
@@ -145,6 +168,7 @@ function pass() {
 
 }
 
+//set cookie
 function setCookie(cname, cvalue, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));

@@ -1,3 +1,5 @@
+<!-- Refers to the MarkerMain.php Page for more details -->
+
 <?php
 session_start();
 
