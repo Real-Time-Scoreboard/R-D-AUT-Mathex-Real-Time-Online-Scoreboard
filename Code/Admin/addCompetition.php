@@ -10,7 +10,7 @@
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
 		header("Location: invalidLogin.html");
 	} else {
-		$msg = "Logged in as: " . $_SESSION['fullname'];
+		$msg = "Logged in as: " . $_SESSION['fullName'];
 	}
 	include '../DataBaseManagement/ConnectionManager.php';
 	include '../DataBaseManagement/InsertData.php';
@@ -54,7 +54,7 @@
         	<a class="nav-link "  href="addUser.php">Users</a>
       	</li>
       	<li class="nav-item">
-        	<a class="nav-link" href="logout.php">Logout</a>
+        	<a class="nav-link" href="../Spectator/logout.php">Logout</a>
       	</li>
     	</ul>
 

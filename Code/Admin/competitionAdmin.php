@@ -13,7 +13,7 @@
 	if (!$_SESSION['valid'] || $_SESSION['privilege'] != 'Admin'){
 		header("Location: invalidLogin.html");
 	} else {
-		$msg = "Logged in as: " . $_SESSION['fullname'];
+		$msg = "Logged in as: " . $_SESSION['fullName'];
 		if (isset($_GET['id'])) {
 			//gets the current competition id and saves to session variable
 			$_SESSION['selectedCompetition'] = $_GET['id'];
@@ -61,7 +61,7 @@
 					<a class="nav-link "  href="addUser.php">Users</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="logout.php">Logout</a>
+					<a class="nav-link" href="../Spectator/logout.php">Logout</a>
 				</li>
 			</ul>
 
