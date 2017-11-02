@@ -1,0 +1,87 @@
+
+
+@media screen and (min-width: 1200px) {
+  button {
+    border-radius: 4px;
+    background-color: green;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 20px;
+    width: inherit;
+    height: inherit;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+  }
+
+  span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+  span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+
+  button:hover span {
+    padding-right: 25px;
+  }
+
+  button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  button {
+    border-radius: 4px;
+    background-color: green;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 20px;
+    width: inherit;
+    height: inherit;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+  }
+
+  span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+  span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+
+  button:hover span {
+    padding-right: 25px;
+  }
+
+  button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+}

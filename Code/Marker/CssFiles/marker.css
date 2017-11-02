@@ -1,0 +1,66 @@
+body {
+  margin: 1%;
+  overflow-y: hidden;
+}
+
+.header {
+
+text-align: center;
+background: none;
+height: 15%;
+
+}
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+  >.col, >[class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.pageBorder {
+  height: 85%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: Black;
+  border-radius: 10px;
+}
+
+ul.nav li {
+  margin: 5px 5px 10px 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: Black;
+  border-radius: 10px;
+}
+
+ul.nav li:hover {
+  background-color: lightblue;
+  text-decoration: underline;
+  cursor:pointer;
+}
+
+ul.nav li.nav-item {}
+
+@media screen and (min-width: 1200px) {
+  .center_div {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: 40%/* value of your choice which suits your alignment */
+  }
+}
+
+@media screen and (max-width: 400px) {
+    h1{
+      font-size:28px;
+    }
+}
+
+@media (min-width: 401px) and (max-width: 768px) {
+  h1{
+      font-size:18px;
+  }
+}
